@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Midwest Emo</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:     #0c0d0f;
+  --paper:  #e8e0d0;
+  --sepia:  #b89a6a;
+  --warm:   #d4b896;
+  --dim:    #5a5040;
+  --cold:   #8fa0b0;
+  --ink:    #1a1612;
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--paper);
+  font-family: 'IBM Plex Mono', monospace;
+  overflow: hidden;
+}
+
+/* ── NOISE ── */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 100;
+}
+
+/* ── SCENE ── */
+.scene {
+  position: fixed; inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Sky gradient — winter dusk */
+.sky {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg,
+    #0a0c12 0%,
+    #121828 25%,
+    #1e2535 50%,
+    #2a2e38 70%,
+    #1a1612 100%
+  );
+}
+
+/* Ground / snow */
+.ground {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 22%;
+  background: linear-gradient(180deg, #1e2028 0%, #252830 40%, #2e3038 100%);
+}
+.ground::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, #c8cdd8 30%, #d8dde8 60%, transparent 100%);
+  opacity: 0.5;
+}
+
+/* Stars */
+.stars {
+  position: absolute; inset: 0;
+}
+.star {
+  position: absolute;
+  width: 1px; height: 1px;
+  background: #c8cdd8;
+  border-radius: 50%;
+}
+
+/* ── THE HOUSE SVG ── */
+.house-wrap {
+  position: relative;
+  z-index: 10;
+  margin-bottom: -8vh;
+}
+
+.house-svg {
+  width: min(420px, 72vw);
+  filter: drop-shadow(0 8px 40px rgba(0,0,0,0.7));
+}
+
+/* Window glow */
+@keyframes flicker {
+  0%,100% { opacity: 0.55; }
+  50%      { opacity: 0.45; }
+  75%      { opacity: 0.60; }
+}
+.window-glow { animation: flicker 4s ease-in-out infinite; }
+.window-glow-2 { animation: flicker 5.5s ease-in-out infinite 1s; }
+
+/* ── TEXT LAYER ── */
+.address-wrap {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  margin-top: 3vh;
+}
+
+.address {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(9px, 1.1vw, 13px);
+  font-weight: 300;
+  color: var(--cold);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: fadeUp 1.8s ease 0.8s forwards;
+}
+
+.tagline {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: clamp(14px, 2vw, 20px);
+  color: var(--warm);
+  opacity: 0;
+  margin-top: 10px;
+  animation: fadeUp 1.8s ease 1.4s forwards;
+}
+
+.enter-btn {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 10px 28px;
+  border: 1px solid rgba(180,160,120,0.3);
+  border-radius: 2px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sepia);
+  background: transparent;
+  cursor: pointer;
+  opacity: 0;
+  animation: fadeUp 1.8s ease 2.2s forwards;
+  transition: border-color 0.3s, color 0.3s, background 0.3s;
+  text-decoration: none;
+}
+.enter-btn:hover {
+  border-color: rgba(180,160,120,0.7);
+  color: var(--paper);
+  background: rgba(180,160,120,0.05);
+}
+
+/* Snow particles */
+.snow { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 5; }
+.flake {
+  position: absolute;
+  top: -10px;
+  color: rgba(210,220,230,0.5);
+  font-size: 8px;
+  animation: fall linear infinite;
+  user-select: none;
+}
+@keyframes fall {
+  to { transform: translateY(110vh) translateX(30px); opacity: 0; }
+}
+
+/* ── COMING SOON OVERLAY ── */
+.rooms-hint {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  color: var(--dim);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  z-index: 20;
+  opacity: 0;
+  animation: fadeUp 1.5s ease 3.2s forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<div class="scene">
+  <div class="sky"></div>
+  <div class="stars" id="stars"></div>
+  <div class="snow" id="snow"></div>
+
+  <!-- ── THE HOUSE ── -->
+  <div class="house-wrap">
+    <svg class="house-svg" viewBox="0 0 420 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+      <!-- Shadow on ground -->
+      <ellipse cx="210" cy="352" rx="140" ry="8" fill="rgba(0,0,0,0.5)"/>
+
+      <!-- Main structure -->
+      <rect x="60" y="160" width="300" height="190" fill="#1a1c1e" stroke="#2e3035" stroke-width="1"/>
+
+      <!-- Second floor / gable dormers -->
+      <rect x="80" y="110" width="260" height="70" fill="#1c1e20" stroke="#2e3035" stroke-width="1"/>
+
+      <!-- Main roof -->
+      <polygon points="40,165 210,60 380,165" fill="#151618" stroke="#2a2c30" stroke-width="1.5"/>
+
+      <!-- Chimney -->
+      <rect x="280" y="50" width="28" height="80" fill="#161819" stroke="#2a2c30" stroke-width="1"/>
+      <rect x="277" y="48" width="34" height="6" fill="#1e2022"/>
+
+      <!-- Chimney smoke (subtle) -->
+      <path d="M 294 48 Q 298 36 292 26 Q 288 18 294 10" stroke="rgba(180,180,190,0.12)" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+      <!-- Porch roof -->
+      <polygon points="85,242 210,210 335,242" fill="#141618" stroke="#252830" stroke-width="1"/>
+
+      <!-- Porch floor -->
+      <rect x="95" y="240" width="230" height="14" fill="#1c1e20" stroke="#2a2c30" stroke-width="0.5"/>
+
+      <!-- Porch columns -->
+      <rect x="105" y="215" width="6" height="40" fill="#222428"/>
+      <rect x="155" y="215" width="6" height="40" fill="#222428"/>
+      <rect x="258" y="215" width="6" height="40" fill="#222428"/>
+      <rect x="308" y="215" width="6" height="40" fill="#222428"/>
+
+      <!-- Porch railing -->
+      <line x1="110" y1="234" x2="314" y2="234" stroke="#252830" stroke-width="1"/>
+
+      <!-- Front door -->
+      <rect x="186" y="255" width="48" height="65" fill="#141618" stroke="#2e3035" stroke-width="1"/>
+      <rect x="188" y="257" width="44" height="62" fill="#131518"/>
+      <!-- Door window -->
+      <rect x="196" y="262" width="28" height="18" fill="rgba(180,160,100,0.08)" stroke="#2a2820" stroke-width="0.5"/>
+      <!-- Door knob -->
+      <circle cx="228" cy="292" r="2" fill="#3a3830"/>
+
+      <!-- WINDOWS — upper floor (warm glow) -->
+      <!-- Left upper -->
+      <rect x="92" y="125" width="52" height="40" fill="rgba(180,140,70,0.06)" stroke="#2e3035" stroke-width="1"/>
+      <rect class="window-glow" x="94" y="127" width="48" height="36" fill="rgba(200,160,80,0.12)"/>
+      <line x1="118" y1="127" x2="118" y2="163" stroke="#2e3035" stroke-width="0.5"/>
+      <line x1="94" y1="145" x2="142" y2="145" stroke="#2e3035" stroke-width="0.5"/>
+
+      <!-- Right upper -->
+      <rect x="276" y="125" width="52" height="40" fill="rgba(180,140,70,0.06)" stroke="#2e3035" stroke-width="1"/>
+      <rect class="window-glow-2" x="278" y="127" width="48" height="36" fill="rgba(200,160,80,0.10)"/>
+      <line x1="302" y1="127" x2="302" y2="163" stroke="#2e3035" stroke-width="0.5"/>
+      <line x1="278" y1="145" x2="326" y2="145" stroke="#2e3035" stroke-width="0.5"/>
+
+      <!-- WINDOWS — main floor -->
+      <!-- Far left -->
+      <rect x="74" y="180" width="60" height="50" fill="rgba(140,160,180,0.04)" stroke="#2e3035" stroke-width="1"/>
+      <rect x="76" y="182" width="56" height="46" fill="rgba(140,160,180,0.04)"/>
+      <line x1="104" y1="182" x2="104" y2="228" stroke="#2e3035" stroke-width="0.5"/>
+      <line x1="76" y1="205" x2="132" y2="205" stroke="#2e3035" stroke-width="0.5"/>
+
+      <!-- Left -->
+      <rect x="148" y="180" width="58" height="50" fill="rgba(140,160,180,0.04)" stroke="#2e3035" stroke-width="1"/>
+      <line x1="177" y1="182" x2="177" y2="230" stroke="#2e3035" stroke-width="0.5"/>
+      <line x1="150" y1="205" x2="206" y2="205" stroke="#2e3035" stroke-width="0.5"/>
+
+      <!-- Right -->
+      <rect x="214" y="180" width="58" height="50" fill="rgba(140,160,180,0.04)" stroke="#2e3035" stroke-width="1"/>
+      <line x1="243" y1="182" x2="243" y2="230" stroke="#2e3035" stroke-width="0.5"/>
+      <line x1="216" y1="205" x2="272" y2="205" stroke="#2e3035" stroke-width="0.5"/>
+
+      <!-- Far right -->
+      <rect x="286" y="180" width="60" height="50" fill="rgba(140,160,180,0.04)" stroke="#2e3035" stroke-width="1"/>
+      <line x1="316" y1="182" x2="316" y2="230" stroke="#2e3035" stroke-width="0.5"/>
+      <line x1="288" y1="205" x2="346" y2="205" stroke="#2e3035" stroke-width="0.5"/>
+
+      <!-- Dormers on roof -->
+      <rect x="128" y="90" width="45" height="35" fill="#151618" stroke="#252830" stroke-width="0.8"/>
+      <polygon points="120,92 150,72 180,92" fill="#111315" stroke="#1e2025" stroke-width="0.8"/>
+      <rect x="134" y="96" width="33" height="24" fill="rgba(180,140,70,0.08)" stroke="#252830" stroke-width="0.5"/>
+
+      <rect x="247" y="90" width="45" height="35" fill="#151618" stroke="#252830" stroke-width="0.8"/>
+      <polygon points="240,92 270,72 300,92" fill="#111315" stroke="#1e2025" stroke-width="0.8"/>
+      <rect x="253" y="96" width="33" height="24" fill="rgba(140,160,180,0.05)" stroke="#252830" stroke-width="0.5"/>
+
+      <!-- Foundation -->
+      <rect x="55" y="345" width="310" height="10" fill="#141618" stroke="#252830" stroke-width="0.5"/>
+
+      <!-- Stairs to porch -->
+      <rect x="182" y="318" width="56" height="6" fill="#1e2022"/>
+      <rect x="178" y="324" width="64" height="6" fill="#1c1e20"/>
+      <rect x="174" y="330" width="72" height="8" fill="#1a1c1e"/>
+
+      <!-- Trees (bare, winter) -->
+      <!-- Left tree -->
+      <line x1="28" y1="350" x2="28" y2="200" stroke="#1c1e20" stroke-width="3"/>
+      <line x1="28" y1="280" x2="8" y2="240" stroke="#1c1e20" stroke-width="1.5"/>
+      <line x1="28" y1="255" x2="48" y2="218" stroke="#1c1e20" stroke-width="1.5"/>
+      <line x1="28" y1="240" x2="10" y2="210" stroke="#1c1e20" stroke-width="1"/>
+      <line x1="28" y1="220" x2="38" y2="198" stroke="#1c1e20" stroke-width="1"/>
+      <line x1="28" y1="210" x2="16" y2="192" stroke="#1c1e20" stroke-width="0.8"/>
+
+      <!-- Right tree -->
+      <line x1="392" y1="350" x2="392" y2="195" stroke="#1c1e20" stroke-width="2.5"/>
+      <line x1="392" y1="270" x2="408" y2="235" stroke="#1c1e20" stroke-width="1.5"/>
+      <line x1="392" y1="248" x2="374" y2="218" stroke="#1c1e20" stroke-width="1.5"/>
+      <line x1="392" y1="230" x2="405" y2="210" stroke="#1c1e20" stroke-width="1"/>
+      <line x1="392" y1="215" x2="378" y2="198" stroke="#1c1e20" stroke-width="0.8"/>
+
+      <!-- Snow on ground / roof -->
+      <path d="M 40 165 Q 120 158 210 155 Q 300 158 380 165" stroke="rgba(200,210,225,0.25)" stroke-width="2" fill="none"/>
+      <path d="M 60 350 Q 160 344 210 342 Q 260 344 360 350" stroke="rgba(200,210,225,0.2)" stroke-width="3" fill="none"/>
+    </svg>
+  </div>
+
+  <!-- ── TEXT ── -->
+  <div class="address-wrap">
+    <div class="address">704 West High Street &nbsp;·&nbsp; Champaign, Illinois</div>
+    <div class="tagline">Just Before Snow</div>
+    <a class="enter-btn" href="#">Enter the House</a>
+  </div>
+
+  <div class="ground"></div>
+</div>
+
+<div class="rooms-hint">Basement · Living Room · Kitchen · Porch · Upstairs · The Network · Zoom Out</div>
+
+<script>
+// Stars
+const starsEl = document.getElementById('stars');
+for (let i = 0; i < 120; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  s.style.cssText = `
+    left:${Math.random()*100}%;
+    top:${Math.random()*55}%;
+    opacity:${Math.random()*0.6+0.1};
+    width:${Math.random()<0.15?2:1}px;
+    height:${Math.random()<0.15?2:1}px;
+  `;
+  starsEl.appendChild(s);
+}
+
+// Snow
+const snowEl = document.getElementById('snow');
+for (let i = 0; i < 40; i++) {
+  const f = document.createElement('div');
+  f.className = 'flake';
+  f.textContent = '·';
+  f.style.cssText = `
+    left:${Math.random()*100}%;
+    font-size:${Math.random()*6+4}px;
+    animation-duration:${Math.random()*8+6}s;
+    animation-delay:${Math.random()*8}s;
+    opacity:${Math.random()*0.4+0.1};
+  `;
+  snowEl.appendChild(f);
+}
+
+// Enter btn placeholder
+document.querySelector('.enter-btn').addEventListener('click', e => {
+  e.preventDefault();
+  // TODO: transition to house interior / room navigation
+  alert('The rooms are coming. Stand outside a little longer.');
+});
+</script>
+</body>
+</html>
