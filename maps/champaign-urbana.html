@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Champaign-Urbana — Midwest Emo Map</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=IM+Fell+English:ital@0;1&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:    #0c0d0f;
+  --panel: #111214;
+  --border: #1e2025;
+  --gold:  #d4a84b;
+  --warm:  #d4b896;
+  --dim:   #5a5650;
+  --cold:  #8fa0b0;
+  --text:  #c8c0b0;
+}
+
+html, body { height: 100%; background: var(--bg); overflow: hidden; font-family: 'IBM Plex Mono', monospace; }
+
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9999;
+}
+
+/* ── MAP ── */
+#map {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+}
+
+/* Force dark Leaflet tiles */
+.leaflet-tile { filter: brightness(0.85) saturate(0.7) contrast(1.1); }
+.leaflet-container { background: #0c0d0f; }
+
+/* ── HEADER ── */
+.header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  padding: 16px 20px 12px;
+  background: linear-gradient(180deg, rgba(12,13,15,0.96) 0%, rgba(12,13,15,0.85) 70%, transparent 100%);
+  pointer-events: none;
+}
+.header-inner {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  pointer-events: all;
+}
+.back-link {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.back-link:hover { color: var(--gold); }
+.header h1 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+}
+.header .sub {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: var(--dim);
+  text-transform: uppercase;
+}
+
+/* ── SIDE PANEL ── */
+#panel {
+  position: fixed;
+  top: 0; right: 0;
+  width: 380px;
+  height: 100%;
+  z-index: 400;
+  background: rgba(10,10,12,0.97);
+  border-left: 1px solid var(--border);
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+#panel.open { transform: translateX(0); }
+
+@media (max-width: 600px) {
+  #panel {
+    width: 100%;
+    top: auto;
+    bottom: 0;
+    height: 70%;
+    border-left: none;
+    border-top: 1px solid var(--border);
+    transform: translateY(100%);
+    border-radius: 12px 12px 0 0;
+  }
+  #panel.open { transform: translateY(0); }
+}
+
+.panel-header {
+  padding: 20px 20px 14px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: rgba(10,10,12,0.98);
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.panel-icon {
+  font-size: 20px;
+  margin-bottom: 6px;
+  display: block;
+}
+.panel-name {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 22px;
+  color: var(--warm);
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+.panel-address {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.panel-close {
+  background: none;
+  border: none;
+  color: var(--dim);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.2s;
+  flex-shrink: 0;
+  margin-left: 12px;
+  margin-top: 2px;
+}
+.panel-close:hover { color: var(--gold); }
+
+.panel-desc {
+  padding: 16px 20px;
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--dim);
+  border-bottom: 1px solid var(--border);
+}
+
+.panel-quotes {
+  padding: 16px 20px;
+  flex: 1;
+}
+.quotes-label {
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 16px;
+}
+
+.quote-item {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(30,32,37,0.8);
+}
+.quote-item:last-child { border-bottom: none; margin-bottom: 0; }
+
+.quote-text {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  margin-bottom: 7px;
+  opacity: 0.9;
+}
+.quote-attr {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.65;
+}
+
+/* ── CUSTOM LEAFLET MARKERS ── */
+.custom-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.marker-pin {
+  width: 32px;
+  height: 32px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(0,0,0,0.3);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.6);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.marker-pin:hover {
+  transform: rotate(-45deg) scale(1.15);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.8);
+}
+.marker-pin.active {
+  transform: rotate(-45deg) scale(1.2);
+  box-shadow: 0 0 20px currentColor;
+}
+.marker-inner {
+  transform: rotate(45deg);
+  font-size: 13px;
+  line-height: 1;
+}
+
+/* ── LEGEND ── */
+.legend {
+  position: fixed;
+  bottom: 24px;
+  left: 20px;
+  z-index: 400;
+  background: rgba(10,10,12,0.92);
+  border: 1px solid var(--border);
+  padding: 12px 16px;
+  pointer-events: none;
+}
+.legend-title {
+  font-size: 8px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 10px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--dim);
+  margin-bottom: 6px;
+}
+.legend-item:last-child { margin-bottom: 0; }
+.legend-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Scrollbar */
+#panel::-webkit-scrollbar { width: 3px; }
+#panel::-webkit-scrollbar-track { background: transparent; }
+#panel::-webkit-scrollbar-thumb { background: var(--border); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <a class="back-link" href="../index.html">← 704 West High St</a>
+    <div>
+      <h1>Champaign–Urbana</h1>
+      <div class="sub">Key locations · Midwest Emo</div>
+    </div>
+  </div>
+</div>
+
+<div id="map"></div>
+
+<!-- SIDE PANEL -->
+<div id="panel">
+  <div class="panel-header">
+    <div>
+      <span class="panel-icon" id="panel-icon"></span>
+      <div class="panel-name" id="panel-name"></div>
+      <div class="panel-address" id="panel-address"></div>
+    </div>
+    <button class="panel-close" onclick="closePanel()">×</button>
+  </div>
+  <div class="panel-desc" id="panel-desc"></div>
+  <div class="panel-quotes">
+    <div class="quotes-label">From the interviews</div>
+    <div id="panel-quotes-list"></div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-title">Location Types</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#d4a84b"></div>Historic house</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#6ab0d4"></div>Practice space</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#b07ad4"></div>Show house</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#d4766a"></div>Venue</div>
+</div>
+
+<script>
+// ── LOCATION DATA ──
+const locations = [
+  {
+    id: 'af-house',
+    name: '704 West High Street',
+    address: '704 W High St, Urbana, IL 61801',
+    icon: '🏠',
+    color: '#d4a84b',
+    lat: 40.1099705,
+    lng: -88.2165685,
+    type: 'Historic house',
+    desc: 'The American Football house. Built 1893. Immortalized on the cover of American Football\'s debut LP (1999). Now owned by the band and Polyvinyl Records. The most visited address in Midwest emo.',
+    quotes: [
+      { text: "I was more into the window. At the time, I wasn't really thinking about the house. It was more about the window.", attr: "Chris Strong, who took the album cover photo" },
+      { text: "I used to call it 'Just Before Snow.' I think it was literally because when it was one of those… you know, sometimes it snows in April in Champaign. If you look at it, you can see some of the light spilling out of the window — that halo is caused by very light snow in the air.", attr: "Chris Strong, on the original title of the photo" },
+      { text: "Because it's so bland and empty, it really just allows people to project onto it whatever they want. It's a frictionless way to absorb whatever you're feeling.", attr: "Paul Preissner, architect, on the house's nondescript vernacular quality" },
+      { text: "The American Football house is kind of owned by a community of people all around the world on the internet who connect for whatever reason.", attr: "Nick Macri (C-Clamp)" },
+      { text: "I was right around the corner from the American Football house. Although American Football — I remember meeting Mike when he was in high school. He had already heard C-Clamp.", attr: "Nick Macri, on his time living in Urbana during college" },
+      { text: "We had a drum set up in the living room and Chris Strong lived in the basement. That's where Lauren did all the vegetables and anybody who wanted to come brought a can of beans.", attr: "Lauren Bilanko, on Chili Nights at 704" },
+      { text: "I feel like now it's one of the nicer houses in the neighborhood. We had to make certain changes just to keep it alive.", attr: "Chris Strong, after the band's renovation" },
+      { text: "People are casting their carefree college days on this photo of a house that was probably kind of a dump. But again, it's kind of the beauty in the ordinary — beauty in the mundane of just everyday life.", attr: "Nick Macri" }
+    ]
+  },
+  {
+    id: '808-california',
+    name: '808 California Street',
+    address: '808 California St, Urbana, IL',
+    icon: '🎸',
+    color: '#b07ad4',
+    lat: 40.1112,
+    lng: -88.2168,
+    type: 'Show house',
+    desc: 'The primary house show venue for the Urbana scene in the early-to-mid 90s. Rachael Dietkus lived here and booked most of the shows. Braid, Lungfish, Cap\'n Jazz, Sky Corvair, Friction, and the Promise Ring all played here. The Lungfish bassist John Chriest famously set up his bass amp in the kitchen.',
+    quotes: [
+      { text: "808 California was where I lived and where I booked just a ton of shows. So many bands came through there and played.", attr: "Rachael Dietkus, who lived at 808 and booked the shows" },
+      { text: "808 California was the place where we booked a lot of shows. I think our friend Rachel lived there. Lungfish played there. Cap'n Jazz, Sky Corvair, Friction. Braid obviously played there a bunch.", attr: "Bob Nanna (Braid)" },
+      { text: "He set up his shit by the fucking fridge. And the bass waves traveled — but it's just him playing, you know, just by himself. It was probably his middle finger to the band at that point.", attr: "Neil Sandler, on Lungfish bassist John Chriest at 808 California" },
+      { text: "It was unbelievable how amazing they sounded in a living room in an old house. I mean, it was just like crazy, absolutely crazy.", attr: "Rachael Dietkus, on seeing Lungfish perform at 808" },
+      { text: "Rachel was sort of single-handedly in charge of the best house shows. 808 was the best house for shows. They were separate worlds — the Hum and Poster Children bands were sort of the Ward Gollings / Blind Pig world.", attr: "Steve (American Football), on the two orbits of the scene" },
+      { text: "I remember the first time I probably ever saw Steve Lamos was at an 808 California show. And I don't think he was playing in a band — American Football was not a band at that time.", attr: "Rachael Dietkus" },
+      { text: "Davey Von Bohlen — I started dating him winter of 94, 95. I think the Promise Ring's first show in Champaign-Urbana was not at 808 California, but eventually they came through.", attr: "Rachael Dietkus" },
+      { text: "Todd, Roy, Bob and I lived on the second floor of 401 Springfield. And before that, 94 to 95, was 808 California.", attr: "Rachael Dietkus, mapping the Braid house geography" }
+    ]
+  },
+  {
+    id: 'af-practice',
+    name: '107½ West Washington',
+    address: '107½ W Washington St, Urbana, IL (now demolished)',
+    icon: '🥁',
+    color: '#6ab0d4',
+    lat: 40.1054534,
+    lng: -88.2082040,
+    type: 'Practice space',
+    desc: 'A small coach house behind a larger building where American Football wrote and rehearsed every song on LP1. Now a hole in the ground — demolished by a developer. Steve Lamos had a drum set up in the living room.',
+    quotes: [
+      { text: "We practiced at 107 and a half West Washington, which is now a hole in the ground. Every American Football song from the first record was written in that house. I had a drum set set up in the living room.", attr: "Steve Lamos, American Football drummer" },
+      { text: "We were in a coach house behind. I sort of left at least mid-semester and got this little one-room house.", attr: "Steve Lamos" },
+      { text: "There's the American Football house that people know. But the practice house — that's gone. Just gone.", attr: "Steve (American Football)" },
+      { text: "Basements mean everything. Living rooms are important, but I think basements are really the foundation of this stuff. It's basement music. Sometimes when it's polished enough, it gets to go upstairs.", attr: "Steve (American Football), on where the music lives" },
+      { text: "American Football into the Champaign world — we weren't part of that. We played Blind Pig once maybe or twice. It's funny to watch a younger generation sort of write us into that history in a way that I don't feel is necessarily accurate.", attr: "Steve (American Football)" }
+    ]
+  },
+  {
+    id: 'braid-house',
+    name: '401 West Springfield Avenue',
+    address: '401 W Springfield Ave, Champaign, IL (demolished)',
+    icon: '🏚',
+    color: '#d4a84b',
+    lat: 40.1125330,
+    lng: -88.2486070,
+    type: 'Historic house',
+    desc: 'The Braid house. Todd, Roy, Bob Nanna, and Rachael Dietkus lived on the second floor (95–96). The house was already falling apart when the band lived there and has since been demolished — now an apartment building. Braid\'s connection to the scene ran through both this house and 808 California.',
+    quotes: [
+      { text: "That was 401 West Springfield, which is now an apartment building. It's been torn down. That house was falling apart anyway.", attr: "Rachael Dietkus, who lived there with Todd, Roy, and Bob Nanna of Braid" },
+      { text: "I lived just down the street from the Braid House where we all lived. I walked to work every day. That's where I met Chris Strong. He was a cook, a chef.", attr: "Chris (Braid), on the neighborhood" },
+      { text: "I've talked to everyone in Braid and some other people who lived or went to that house and none of them can remember whether or not that was actually the Braid house — the one on the album cover.", attr: "Andy Mueller, designer" },
+      { text: "When bands came into town, whether they were on tour with Braid or not, Braid would just invite them to sleep on our floor. For the entire year, we'd just be walking into the house after bars and finding boys all over the floor with no idea who they were.", attr: "From the Braid house oral history" },
+      { text: "I remember sitting and listening — Roy always had all these tapes and they would play me things. I mean, it was just hang out and play music. Literally just hang out.", attr: "Chris Strong, on visiting the Braid house" },
+      { text: "All of a sudden Braid kind of went from being our drinking buddies to being a real band, you know.", attr: "Jeff Garber" }
+    ]
+  },
+  {
+    id: 'hum-house',
+    name: '201 Hessel Boulevard',
+    address: '201 Hessel Blvd, Champaign, IL',
+    icon: '🔊',
+    color: '#6ab0d4',
+    lat: 40.1021900,
+    lng: -88.2448640,
+    type: 'Practice space',
+    desc: 'The Hum house. Nick Macri (C-Clamp, later Hum bassist) lived here with Matt Talbot and Brian St. Pierre from 1993–1995, while Hum were writing both Electra 2000 and You\'d Prefer an Astronaut. Nick heard them writing the music in the basement while he sat in the living room.',
+    quotes: [
+      { text: "I lived with Brian St. Pierre and Matt Talbot while they were writing Electra 2000 and You'd Prefer an Astronaut. I believe it was 201 Hessel in Champaign — H-E-S-S-E-L. That was like 93 to 95.", attr: "Nick Macri (C-Clamp / Hum), who lived in the house" },
+      { text: "Hum was definitely an influence — more like in a friend group sort of way. I was actually hearing them write the music in the basement while sitting in the living room.", attr: "Nick Macri" },
+      { text: "It had more of an influence on me because we were roommates. Just me, Matt, Brian and my friend Gordon, who was a drummer at the time.", attr: "Nick Macri" },
+      { text: "The drive from Chicago to Champaign had a direct impact on their music. It's very meandering and related to nature — their mind would just wander on these drives and that would come out in the music as an 'open sky quality.'", attr: "Nick Macri, describing C-Clamp bassist's account of the Chicago–Champaign drive" },
+      { text: "It's close to where I grew up, like near Hessel Park.", attr: "Nick Macri, on the neighborhood" }
+    ]
+  },
+  {
+    id: 'blind-pig',
+    name: 'The Blind Pig',
+    address: '51 E Main St, Champaign, IL (former location)',
+    icon: '🎵',
+    color: '#d4766a',
+    lat: 40.1179704,
+    lng: -88.2428110,
+    type: 'Venue',
+    desc: 'The Blind Pig — Champaign\'s seminal indie rock venue on East Main Street, downtown. Booked by Ward Gollings through the late 80s and into the 90s. Flaming Lips, Brainiac, and virtually every touring indie band came through. The older, professional counterpart to the house show circuit.',
+    quotes: [
+      { text: "Ward booked all those places through the halfway through the 80s into the 90s. He brought Brainiac to the Blind Pig. We saw everything that you could possibly imagine. We were just indie rock stalwarts.", attr: "Jeff Garber" },
+      { text: "We stood outside of the Blind Pig and watched through the big window until the window got too fogged up to where we couldn't see the band anymore. And then we got old enough to get into shows.", attr: "Todd Bell, on being underage and desperate to see the shows" },
+      { text: "We played Blind Pig once maybe or twice. We were not part of that world. It's funny to watch a younger generation sort of write us into that history.", attr: "Steve (American Football)" },
+      { text: "That was a fantastic room. But that's all we had at that time. A couple little places on campus that you could still play, a couple halls.", attr: "Jeff Garber (Castor)" },
+      { text: "The Blind Pig and the house shows were separate worlds. The Hum and Poster Children bands were sort of the Ward Gollings / Blind Pig orbit.", attr: "Steve (American Football)" },
+      { text: "There were a lot of people like me who were local but not 18 yet. So we just went to house shows and things like that — until we could get into the Blind Pig and other places.", attr: "Katie" },
+      { text: "Channing Murray, Trinos, Blind Pig — that's where we'd go in high school to see bands.", attr: "Chris Strong" }
+    ]
+  }
+];
+
+let activeMarker = null;
+let markerElements = {};
+
+// ── INIT MAP ──
+const map = L.map('map', {
+  center: [40.109, -88.228],
+  zoom: 14,
+  zoomControl: false,
+  attributionControl: false
+});
+
+// Dark tile layer (CartoDB Dark Matter)
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  subdomains: 'abcd',
+  maxZoom: 19
+}).addTo(map);
+
+// Attribution (small, bottom right)
+L.control.attribution({ prefix: false, position: 'bottomright' }).addTo(map);
+map.attributionControl.addAttribution('© <a href="https://www.openstreetmap.org/copyright" style="color:#3a3830">OpenStreetMap</a> · <a href="https://carto.com" style="color:#3a3830">CARTO</a>');
+
+// Zoom control (bottom right)
+L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+// ── CUSTOM MARKERS ──
+function createIcon(loc, isActive) {
+  const html = `
+    <div class="marker-pin${isActive ? ' active' : ''}" style="background:${loc.color}; border-color: rgba(0,0,0,0.4); width:36px;height:36px;">
+      <span class="marker-inner">${loc.icon}</span>
+    </div>`;
+  return L.divIcon({
+    className: 'custom-marker',
+    html,
+    iconSize: [36, 36],
+    iconAnchor: [18, 36],
+    popupAnchor: [0, -40]
+  });
+}
+
+// ── PANEL FUNCTIONS ──
+function openPanel(loc) {
+  document.getElementById('panel-icon').textContent = loc.icon;
+  document.getElementById('panel-name').textContent = loc.name;
+  document.getElementById('panel-address').textContent = loc.address;
+  document.getElementById('panel-desc').textContent = loc.desc;
+
+  const quotesList = document.getElementById('panel-quotes-list');
+  quotesList.innerHTML = loc.quotes.map(q => `
+    <div class="quote-item">
+      <div class="quote-text">"${q.text}"</div>
+      <div class="quote-attr">— ${q.attr}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('panel').classList.add('open');
+  
+  // Fly to location
+  map.flyTo([loc.lat, loc.lng], 15.5, { duration: 1.2, easeLinearity: 0.5 });
+
+  // Update marker styles
+  if (activeMarker && markerElements[activeMarker]) {
+    const prev = locations.find(l => l.id === activeMarker);
+    markerElements[activeMarker].setIcon(createIcon(prev, false));
+  }
+  activeMarker = loc.id;
+  markerElements[loc.id].setIcon(createIcon(loc, true));
+}
+
+function closePanel() {
+  document.getElementById('panel').classList.remove('open');
+  if (activeMarker && markerElements[activeMarker]) {
+    const prev = locations.find(l => l.id === activeMarker);
+    markerElements[activeMarker].setIcon(createIcon(prev, false));
+  }
+  activeMarker = null;
+  map.flyTo([40.109, -88.228], 14, { duration: 1, easeLinearity: 0.5 });
+}
+
+// ── PLACE MARKERS ──
+for (const loc of locations) {
+  const marker = L.marker([loc.lat, loc.lng], { icon: createIcon(loc, false) });
+  
+  // Tooltip label on hover
+  marker.bindTooltip(`<span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#c8c0b0;background:rgba(10,10,12,0.92);border:1px solid #1e2025;padding:4px 8px;border-radius:2px;">${loc.icon} ${loc.name}</span>`, {
+    permanent: false, direction: 'top', className: 'custom-tooltip', offset: [0, -36]
+  });
+  
+  marker.on('click', () => openPanel(loc));
+  marker.addTo(map);
+  markerElements[loc.id] = marker;
+}
+
+// ── CUSTOM TOOLTIP STYLE ──
+const tooltipStyle = document.createElement('style');
+tooltipStyle.textContent = `.custom-tooltip { background:transparent!important; border:none!important; box-shadow:none!important; padding:0!important; }
+.leaflet-tooltip { background:rgba(10,10,12,0.92)!important; border:1px solid #1e2025!important; border-radius:2px!important; color:#c8c0b0!important; font-family:'IBM Plex Mono',monospace!important; padding:4px 8px!important; }
+.leaflet-tooltip::before { display:none!important; }
+.leaflet-zoom-animated { transition: transform 0.25s; }`;
+document.head.appendChild(tooltipStyle);
+
+// ── CLOSE PANEL ON MAP CLICK ──
+map.on('click', (e) => {
+  // Only close if click wasn't on a marker
+  if (activeMarker) closePanel();
+});
+
+// ── KEYBOARD ──
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closePanel();
+});
+</script>
+</body>
+</html>
