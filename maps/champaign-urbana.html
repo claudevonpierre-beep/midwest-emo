@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Champaign-Urbana — Midwest Emo Map</title>
+<title>Midwest Emo — Network Map</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=IM+Fell+English:ital@0;1&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -279,8 +279,8 @@ body::after {
   <div class="header-inner">
     <a class="back-link" href="../index.html">← 704 West High St</a>
     <div>
-      <h1>Champaign–Urbana</h1>
-      <div class="sub">Key locations · Midwest Emo</div>
+      <h1>Midwest Emo Network</h1>
+      <div class="sub">Key locations · Zoom out to see the full circuit</div>
     </div>
   </div>
 </div>
@@ -471,8 +471,172 @@ const locations = [
       { text: "There were a lot of people like me who were local but not 18 yet. So we just went to house shows and things like that — until we could get into the Blind Pig and other places.", attr: "Katie" },
       { text: "Channing Murray, Trinos, Blind Pig — that's where we'd go in high school to see bands.", attr: "Chris Strong" }
     ]
+  },
+
+  // ── GREATER CHICAGO SUBURBS ──
+  {
+    id: 'mcgregors',
+    name: "McGregor's",
+    address: 'NW corner of Rt. 83 & Rt. 64, Elmhurst, IL',
+    icon: '🍺',
+    color: '#d4766a',
+    lat: 41.8910333,
+    lng: -87.9519734,
+    type: 'Venue',
+    desc: 'A sports bar in Elmhurst that ran all-ages punk shows on Sunday nights in the early 90s. Every suburban kid from the Chicago suburbs came here on Sundays. Green Day, NOFX, Jawbreaker, Clutch, The Offspring, Screeching Weasel — all played to small crowds of teenagers before any of them got big.',
+    quotes: [
+      { text: "The club was called McGregor's and on Sunday nights they had an all-ages night. It was like a sports bar, but they always had punk bands coming through. Literally every single Sunday my friends and I would go to McGregor's, whoever was playing.", attr: "Bob Nanna (Braid), who grew up in Lombard" },
+      { text: "Bands that were going to eventually be really, really huge just playing to us, like a bunch of kids. I'm talking like bands like Green Day or NOFX or Jawbreaker or Clutch, Offspring. These are all bands I saw there.", attr: "Bob Nanna (Braid)" },
+      { text: "I got to see Green Day in someone's basement... I tell that story, people are like, green day? And I'm like, well, yeah, cause they were like my friend's friend or whatever, who also happened to be green day.", attr: "Basil" },
+      { text: "People were going to see like Screeching Weasel and stuff, but no one really cared too much about those touring bands, but they still came through and we would still go see them.", attr: "Bob Nanna (Braid)" },
+      { text: "You had to know about it. But even though a lot of these shows were advertised in record stores on flyers with handwritten directions, it wasn't totally closed off, but it wasn't open either.", attr: "Will Hagle" }
+    ]
+  },
+  {
+    id: 'shakefork',
+    name: 'Shakefork Manor',
+    address: '513 Prairie Ave, Downers Grove, IL 60515',
+    icon: '🏡',
+    color: '#b07ad4',
+    lat: 41.8002820,
+    lng: -87.9982055,
+    type: 'Show house',
+    desc: 'The home of Shakefork Records in Downers Grove — a small suburban indie label run in the mid-90s that put out seven-inch comps and singles by the suburban Chicago scene. Connected Braid, Friction, Cap\'n Jazz, and other bands and encouraged the whole community to keep recording and start their own labels.',
+    quotes: [
+      { text: "The label was called Shake Fork. And it was pretty quickly I got to be friends with people at that label. And they were doing little seven inch comps and they put my band on.", attr: "Bob Nanna (Braid), whose early band Slap Happy appeared on a Shakefork comp" },
+      { text: "They were essential in making all of the bands feel really welcome and encouraging for them to keep playing music, keep recording music, keep playing shows, and also encourage a lot of people in the scene to start their own record labels.", attr: "Bob Nanna (Braid)" },
+      { text: "There was like a one on a Shake Fork, like maybe a Friction, Cap'n Jazz split and some other things.", attr: "Basil" }
+    ]
+  },
+  {
+    id: 'fireside-bowl',
+    name: 'Fireside Bowl',
+    address: '2648 W Fullerton Ave, Chicago, IL (Logan Square)',
+    icon: '🎳',
+    color: '#d4766a',
+    lat: 41.9250967,
+    lng: -87.6945010,
+    type: 'Venue',
+    desc: 'A bowling alley in Logan Square, Chicago that became one of the most important DIY punk venues in the country in the late 90s and early 2000s. All-ages, cheap, chaotic. Every band on the midwest circuit played here. Became the consolidation point for the Chicago scene that had previously been scattered across neighborhoods.',
+    quotes: [
+      { text: "I lived in a two bedroom apartment that was a block away from the Fireside Bowl. Our rent was so cheap — even though a block away at the Fireside Bowl, they were playing like big fucking shows.", attr: "Basil" },
+      { text: "Fireside was cool because it became the central meeting point for like all the punk indie whatever kids — south side, west side, north side. Then it all kind of consolidated into the Fireside because the Fireside started doing shows like every night.", attr: "Matthew Kellen" },
+      { text: "Inevitably it came to the Fireside and that's when everything kind of—", attr: "Erik Bocek" },
+      { text: "That was just a huge juggernaut because everybody would come through there.", attr: "Neil" },
+      { text: "The Fireside Bowl existed at that time. So there was stuff to do.", attr: "Evan Weiss" }
+    ]
+  },
+
+  // ── MADISON, WISCONSIN ──
+  {
+    id: 'madison-scene',
+    name: 'Madison Scene / Rainer Maria',
+    address: 'Madison, Wisconsin (University area)',
+    icon: '❄️',
+    color: '#b07ad4',
+    lat: 43.0730,
+    lng: -89.4012,
+    type: 'Show house',
+    desc: 'Rainer Maria formed in Madison, Wisconsin — same flatness, same winters, same house show infrastructure as Champaign-Urbana. Caithlin De Marrais and Kaia Wilson met at UW-Madison. They wrote poems before songs and hosted other touring bands in their apartment basement. Madison fed directly into the Midwest emo network.',
+    quotes: [
+      { text: "Lots of house shows. We would rent out spaces like halls or spaces in the university. And it was like, the city was very comfortable to me to be a part of that scene.", attr: "Caithlin De Marrais (Rainer Maria), on Madison" },
+      { text: "We were always cooking for the bands that were coming through and housing them. It felt very comfortable to me to be a part of that scene.", attr: "Caithlin De Marrais (Rainer Maria)" },
+      { text: "Kai and I lived in the downstairs apartment. William lives upstairs and then we moved into separate houses, but the first house we were all in one space and our first show was in our basement.", attr: "Caithlin De Marrais (Rainer Maria)" },
+      { text: "I never felt like there was a boundary that I didn't feel like there were spaces I wasn't allowed to go into. It felt like a very open time to explore.", attr: "Caithlin De Marrais (Rainer Maria)" },
+      { text: "We were actively seeking something different than corporate mainstream culture. So those spaces were always welcoming.", attr: "Caithlin De Marrais (Rainer Maria)" }
+    ]
+  },
+
+  // ── WASHINGTON DC / ARLINGTON, VA ──
+  {
+    id: 'dischord-house',
+    name: 'Dischord House',
+    address: '3819 Beecher St NW, Washington, DC',
+    icon: '⚡',
+    color: '#6ab0d4',
+    lat: 38.9219125,
+    lng: -77.0751944,
+    type: 'Historic house',
+    desc: 'The house where Ian MacKaye and the Dischord Records operation lived and worked. Minor Threat, Fugazi, Rites of Spring all came from this world. For bands across the Midwest, Dischord was a north star — a model for how to run an independent label, refuse commercial compromise, and make something last.',
+    quotes: [
+      { text: "The members of Braid grew up listening to Fugazi, Minor Threat — they wanted to record at your studio because all these legendary bands recorded there.", attr: "Will Hagle, to Don Zientara" },
+      { text: "They fronted me the money for equipment and I gave them a very cheap rate. That worked out for everybody — I could up my game, and they had better equipment to record with. They just kept sending bands my way.", attr: "Don Zientara, on his arrangement with Dischord" },
+      { text: "If there's anything to be learned from punk, it's that you can get a lot of creative freedom by not thinking too much about the legacy you're going to leave behind. Just do what you want. Do what you feel is art.", attr: "Don Zientara" },
+      { text: "I was influenced by like DC hardcore, but then also like the East Bay stuff.", attr: "Katie" },
+      { text: "They want to record with Jay too. They knew he played with Jawbox and they liked Jawbox and Government Issue. So there was a relationship built up there.", attr: "Don Zientara, on why Braid came to Inner Ear" }
+    ]
+  },
+  {
+    id: 'inner-ear',
+    name: 'Inner Ear Studios',
+    address: 'Arlington, VA (former location)',
+    icon: '🎙',
+    color: '#d4a84b',
+    lat: 38.8810562,
+    lng: -77.1110430,
+    type: 'Practice space',
+    desc: 'Don Zientara\'s recording studio in Arlington, Virginia — home of virtually the entire Dischord Records catalog. Braid recorded Frame and Canvas here in five days with J Robbins (Jawbox) engineering. J Robbins\' first time in the main studio. Everything bleeding into everything else. Almost all first takes.',
+    quotes: [
+      { text: "Frame and Canvas — that was my first time engineering in the main studio at Inner Ear. A complete trial by fire for me. Luckily they just are a phenomenal band.", attr: "J Robbins (Jawbox), who engineered Frame and Canvas" },
+      { text: "There was no isolation in Inner Ear. Everyone's amps and all — you just had to figure out where to put the amps to minimize the bleed. It was so funny to listen to the tracks because everything's bleeding on everything else. And they just fucking slayed it. Almost everything's a first take.", attr: "J Robbins" },
+      { text: "I remixed that record recently and I'm listening to the tones going like, wow. The snare drum is this way, hi-hats bleeding on the guitar, this guitar is so scratchy — and then you put all those things together and it is fucking cool.", attr: "J Robbins, on remixing Frame and Canvas 25 years later" },
+      { text: "It was a pressurized circumstance — Bob was kind of losing his voice and nobody had time to give anything a second thought. The reason it turned out good is because those guys had it completely dialed in.", attr: "J Robbins" },
+      { text: "They recorded it in five days. It was much more luxurious by comparison — my experience was always like, I'm gonna get in there and buckle down and make it happen.", attr: "J Robbins, on the Frame and Canvas sessions vs. Jawbox records" },
+      { text: "J Robbins just ran in and played drums on the chaos part at the end of one song. That was his idea.", attr: "J Robbins, on his cameo on Frame and Canvas" },
+      { text: "They came over towards the end of the studio when the studio was closing and got the Braid two-inch tapes. He remixed them. They put out a 25th anniversary album with new mixes.", attr: "Don Zientara" }
+    ]
+  },
+
+  // ── CALIFORNIA ──
+  {
+    id: 'pickle-patch',
+    name: 'The Pickle Patch',
+    address: '6542 Sabado Tarde #1, Isla Vista, CA',
+    icon: '🥒',
+    color: '#b07ad4',
+    lat: 34.4106052,
+    lng: -119.8557460,
+    type: 'Show house',
+    desc: 'Steve Aoki\'s house show venue in the college town of Isla Vista, adjacent to UC Santa Barbara. Founded 1996. Ran approximately 400 bands per year — about 20 shows a month. Every band who came through got 100% of the door. Braid played. Rainer Maria played. The whole Midwest emo circuit reached California here.',
+    quotes: [
+      { text: "The Pickle Patch was formed in 1996. I moved from Orange County, California where I used to actually put on shows in high school.", attr: "Steve Aoki" },
+      { text: "Every year we had about 400 bands playing. So when you calculate that, it was about 20 shows a month. We literally went from doing it every weekend to every single time a band was touring.", attr: "Steve Aoki" },
+      { text: "We never kept a dime. Every single penny from the door went to the band. We paid for the flyers. We paid to promote it. We paid to book them. We didn't even get paid ourselves. This is entirely a labor of love.", attr: "Steve Aoki" },
+      { text: "Braid plays at Pickle Patch too. I mean, I fucking love Braid.", attr: "Steve Aoki" },
+      { text: "I have stories going back to high school — hanging out with the Promise Ring after they played at Huntington Beach Library and taking them to Edison High School pool and jumping off the 10 meter dives.", attr: "Steve Aoki" },
+      { text: "I was at Coos Cafe watching Mineral. One of the most epic shows was in LA — Christie Front Drive, Jimmy Eat World, Boyz Life. I'd go to all those shows. That was my world. I fucking love emo. Loved every single kind of subgenre.", attr: "Steve Aoki" },
+      { text: "One of the bands that played in our living room, the kitchen, pre-Pickle Patch, was Jimmy Eat World. In front of literally 10 people.", attr: "Steve Aoki" }
+    ]
+  },
+  {
+    id: 'gilman',
+    name: '924 Gilman Street',
+    address: '924 Gilman St, Berkeley, CA',
+    icon: '🏴',
+    color: '#d4766a',
+    lat: 37.8796457,
+    lng: -122.2993500,
+    type: 'Venue',
+    desc: 'The legendary all-ages DIY punk club in Berkeley. Founded 1986 by Maximum Rocknroll. Green Day, Operation Ivy, Jawbreaker, Rancid all played here before getting big. For Midwest emo bands, Gilman was the mythological west coast equivalent — the proof that you could run something important without commercial infrastructure.',
+    quotes: [
+      { text: "We all loved Jawbreaker. That's like the bands I'm talking about when it comes to melody and bringing that into the sound.", attr: "Bob Nanna (Braid), on the East Bay influence" },
+      { text: "I feel like they're kind of from the sort of Jawbreaker school — a little more punk or something. Ryan Rapsus was the guy I paid attention to. He is a monster.", attr: "Steve Lamos, American Football drummer" },
+      { text: "They were influenced by like DC hardcore, but then also like the East Bay kind of Green Day and Jawbreaker stuff. And then obviously it's the middle of the country — but everything connects.", attr: "Katie" },
+      { text: "East Bay, Oakland — to me when I think of East Bay, I think of Mike Kirsch. I was obsessed with Bratmobile. I went to MRR when I was in college. But it wasn't really my scene. I was more like fucking emo and hardcore.", attr: "Steve Aoki" },
+      { text: "Like the Offspring or something — bands that got big for a minute. But that would have fallen away like Jawbreaker, where they got big and then immediately lost it all.", attr: "Erik Bocek" }
+    ]
   }
 ];
+
+// ── ZOOM HINT ──
+const zoomHint = document.createElement('div');
+zoomHint.id = 'zoom-hint';
+zoomHint.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:400;font-family:IBM Plex Mono,monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(90,86,80,0.7);pointer-events:none;transition:opacity 0.5s;';
+zoomHint.textContent = '← scroll out to see the full network →';
+document.body.appendChild(zoomHint);
+map.on('zoom', () => {
+  zoomHint.style.opacity = map.getZoom() < 7 ? '0' : map.getZoom() > 11 ? '1' : '0.5';
+});
 
 let activeMarker = null;
 let markerElements = {};
@@ -480,7 +644,7 @@ let markerElements = {};
 // ── INIT MAP ──
 const map = L.map('map', {
   center: [40.109, -88.228],
-  zoom: 14,
+  zoom: 13,
   zoomControl: false,
   attributionControl: false
 });
