@@ -628,16 +628,6 @@ const locations = [
   }
 ];
 
-// ── ZOOM HINT ──
-const zoomHint = document.createElement('div');
-zoomHint.id = 'zoom-hint';
-zoomHint.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:400;font-family:IBM Plex Mono,monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(90,86,80,0.7);pointer-events:none;transition:opacity 0.5s;';
-zoomHint.textContent = '← scroll out to see the full network →';
-document.body.appendChild(zoomHint);
-map.on('zoom', () => {
-  zoomHint.style.opacity = map.getZoom() < 7 ? '0' : map.getZoom() > 11 ? '1' : '0.5';
-});
-
 let activeMarker = null;
 let markerElements = {};
 
@@ -647,6 +637,16 @@ const map = L.map('map', {
   zoom: 13,
   zoomControl: false,
   attributionControl: false
+});
+
+// ── ZOOM HINT ──
+const zoomHint = document.createElement('div');
+zoomHint.id = 'zoom-hint';
+zoomHint.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:400;font-family:IBM Plex Mono,monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(90,86,80,0.7);pointer-events:none;transition:opacity 0.5s;';
+zoomHint.textContent = '← scroll out to see the full network →';
+document.body.appendChild(zoomHint);
+map.on('zoom', () => {
+  zoomHint.style.opacity = map.getZoom() < 7 ? '0' : map.getZoom() > 11 ? '1' : '0.5';
 });
 
 // Dark tile layer (CartoDB Dark Matter)
