@@ -90,7 +90,7 @@ body::after {
 }
 
 .house-svg {
-  width: min(420px, 72vw);
+  width: min(500px, 82vw);
   filter: drop-shadow(0 8px 40px rgba(0,0,0,0.7));
 }
 
@@ -201,121 +201,289 @@ body::after {
 
   <!-- ── THE HOUSE ── -->
   <div class="house-wrap">
-    <svg class="house-svg" viewBox="0 0 420 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!--
+      704 West High Street, Urbana IL — American Football house
+      1.5-story front-gable cottage, built 1893
+      33ft wide lot | white clapboard | full-width hipped porch roof
+      3 square box columns | door left-of-center | 2 windows right
+      1 tall centered gable window | no dormers | no chimney (front)
+    -->
+    <svg class="house-svg" viewBox="0 0 500 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="glow-warm">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
 
-      <!-- Shadow on ground -->
-      <ellipse cx="210" cy="352" rx="140" ry="8" fill="rgba(0,0,0,0.5)"/>
+      <!-- ── LEFT TREE (large mature deciduous, bare) ── -->
+      <!-- trunk -->
+      <line x1="62" y1="390" x2="68" y2="230" stroke="#18191c" stroke-width="5" stroke-linecap="round"/>
+      <!-- main branches -->
+      <line x1="66" y1="290" x2="30" y2="235" stroke="#18191c" stroke-width="3" stroke-linecap="round"/>
+      <line x1="66" y1="270" x2="95" y2="210" stroke="#18191c" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="66" y1="255" x2="24" y2="200" stroke="#18191c" stroke-width="2" stroke-linecap="round"/>
+      <line x1="66" y1="245" x2="88" y2="185" stroke="#18191c" stroke-width="2" stroke-linecap="round"/>
+      <line x1="66" y1="235" x2="40" y2="170" stroke="#18191c" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="66" y1="235" x2="78" y2="155" stroke="#18191c" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- sub-branches left -->
+      <line x1="30" y1="235" x2="12" y2="210" stroke="#18191c" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="30" y1="235" x2="38" y2="208" stroke="#18191c" stroke-width="1" stroke-linecap="round"/>
+      <line x1="24" y1="200" x2="8" y2="182" stroke="#18191c" stroke-width="1" stroke-linecap="round"/>
+      <line x1="24" y1="200" x2="32" y2="178" stroke="#18191c" stroke-width="1" stroke-linecap="round"/>
+      <line x1="40" y1="170" x2="26" y2="150" stroke="#18191c" stroke-width="0.8" stroke-linecap="round"/>
+      <line x1="40" y1="170" x2="50" y2="148" stroke="#18191c" stroke-width="0.8" stroke-linecap="round"/>
+      <line x1="78" y1="155" x2="70" y2="132" stroke="#18191c" stroke-width="0.8" stroke-linecap="round"/>
+      <line x1="78" y1="155" x2="90" y2="136" stroke="#18191c" stroke-width="0.8" stroke-linecap="round"/>
+      <line x1="95" y1="210" x2="105" y2="188" stroke="#18191c" stroke-width="1" stroke-linecap="round"/>
+      <line x1="88" y1="185" x2="100" y2="164" stroke="#18191c" stroke-width="0.8" stroke-linecap="round"/>
+      <!-- finest twigs -->
+      <line x1="12" y1="210" x2="4" y2="198" stroke="#18191c" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="8" y1="182" x2="2" y2="170" stroke="#18191c" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="26" y1="150" x2="20" y2="136" stroke="#18191c" stroke-width="0.5" stroke-linecap="round"/>
+      <line x1="50" y1="148" x2="44" y2="133" stroke="#18191c" stroke-width="0.5" stroke-linecap="round"/>
 
-      <!-- Main structure -->
-      <rect x="60" y="160" width="300" height="190" fill="#1a1c1e" stroke="#2e3035" stroke-width="1"/>
+      <!-- ── RIGHT TREE (smaller bare deciduous) ── -->
+      <line x1="432" y1="390" x2="430" y2="258" stroke="#18191c" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="431" y1="310" x2="448" y2="275" stroke="#18191c" stroke-width="2" stroke-linecap="round"/>
+      <line x1="431" y1="290" x2="412" y2="255" stroke="#18191c" stroke-width="1.8" stroke-linecap="round"/>
+      <line x1="431" y1="275" x2="450" y2="248" stroke="#18191c" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="431" y1="268" x2="414" y2="238" stroke="#18191c" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="431" y1="262" x2="436" y2="240" stroke="#18191c" stroke-width="1" stroke-linecap="round"/>
+      <line x1="448" y1="275" x2="458" y2="258" stroke="#18191c" stroke-width="1" stroke-linecap="round"/>
+      <line x1="412" y1="255" x2="404" y2="238" stroke="#18191c" stroke-width="0.8" stroke-linecap="round"/>
+      <line x1="450" y1="248" x2="460" y2="232" stroke="#18191c" stroke-width="0.8" stroke-linecap="round"/>
+      <line x1="414" y1="238" x2="408" y2="222" stroke="#18191c" stroke-width="0.7" stroke-linecap="round"/>
+      <line x1="436" y1="240" x2="440" y2="224" stroke="#18191c" stroke-width="0.7" stroke-linecap="round"/>
 
-      <!-- Second floor / gable dormers -->
-      <rect x="80" y="110" width="260" height="70" fill="#1c1e20" stroke="#2e3035" stroke-width="1"/>
+      <!-- ── SHADOW ── -->
+      <ellipse cx="250" cy="398" rx="130" ry="7" fill="rgba(0,0,0,0.45)"/>
 
-      <!-- Main roof -->
-      <polygon points="40,165 210,60 380,165" fill="#151618" stroke="#2a2c30" stroke-width="1.5"/>
+      <!-- ── FOUNDATION ── -->
+      <!-- Visible gray concrete foundation strip -->
+      <rect x="138" y="362" width="224" height="22" fill="#1c1e22" stroke="#252830" stroke-width="0.5"/>
+      <!-- foundation texture lines -->
+      <line x1="138" y1="369" x2="362" y2="369" stroke="#222428" stroke-width="0.4"/>
+      <line x1="138" y1="375" x2="362" y2="375" stroke="#222428" stroke-width="0.4"/>
 
-      <!-- Chimney -->
-      <rect x="280" y="50" width="28" height="80" fill="#161819" stroke="#2a2c30" stroke-width="1"/>
-      <rect x="277" y="48" width="34" height="6" fill="#1e2022"/>
+      <!-- ── MAIN HOUSE WALLS (first floor) ── -->
+      <!-- Wall body: x=140 to x=360, y=230 to y=364 -->
+      <rect x="140" y="230" width="220" height="134" fill="#1a1b1d" stroke="#282a2e" stroke-width="1"/>
+      <!-- Clapboard siding texture (horizontal lines) -->
+      <line x1="140" y1="237" x2="360" y2="237" stroke="#222428" stroke-width="0.5"/>
+      <line x1="140" y1="244" x2="360" y2="244" stroke="#222428" stroke-width="0.5"/>
+      <line x1="140" y1="251" x2="360" y2="251" stroke="#222428" stroke-width="0.5"/>
+      <line x1="140" y1="258" x2="360" y2="258" stroke="#222428" stroke-width="0.5"/>
+      <line x1="140" y1="265" x2="360" y2="265" stroke="#222428" stroke-width="0.5"/>
+      <line x1="140" y1="272" x2="360" y2="272" stroke="#222428" stroke-width="0.5"/>
+      <line x1="140" y1="279" x2="360" y2="279" stroke="#222428" stroke-width="0.5"/>
+      <line x1="140" y1="286" x2="360" y2="286" stroke="#222428" stroke-width="0.5"/>
+      <line x1="140" y1="293" x2="360" y2="293" stroke="#222428" stroke-width="0.5"/>
+      <line x1="140" y1="300" x2="360" y2="300" stroke="#222428" stroke-width="0.5"/>
+      <line x1="140" y1="307" x2="360" y2="307" stroke="#222428" stroke-width="0.5"/>
+      <line x1="140" y1="314" x2="360" y2="314" stroke="#222428" stroke-width="0.5"/>
+      <line x1="140" y1="321" x2="360" y2="321" stroke="#222428" stroke-width="0.5"/>
+      <line x1="140" y1="328" x2="360" y2="328" stroke="#222428" stroke-width="0.5"/>
+      <line x1="140" y1="335" x2="360" y2="335" stroke="#222428" stroke-width="0.5"/>
+      <line x1="140" y1="342" x2="360" y2="342" stroke="#222428" stroke-width="0.5"/>
+      <line x1="140" y1="349" x2="360" y2="349" stroke="#222428" stroke-width="0.5"/>
+      <line x1="140" y1="356" x2="360" y2="356" stroke="#222428" stroke-width="0.5"/>
 
-      <!-- Chimney smoke (subtle) -->
-      <path d="M 294 48 Q 298 36 292 26 Q 288 18 294 10" stroke="rgba(180,180,190,0.12)" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <!-- corner boards -->
+      <rect x="140" y="230" width="5" height="134" fill="#1d1f22"/>
+      <rect x="355" y="230" width="5" height="134" fill="#1d1f22"/>
 
-      <!-- Porch roof -->
-      <polygon points="85,242 210,210 335,242" fill="#141618" stroke="#252830" stroke-width="1"/>
+      <!-- ── GABLE WALL (above eave, below peak) ── -->
+      <!-- Gable triangle: eave at y=230, peak at x=250 y=108 -->
+      <!-- Left eave: x=140 y=230 | Right eave: x=360 y=230 | Peak: x=250 y=108 -->
+      <polygon points="140,230 360,230 250,108" fill="#191a1c" stroke="#282a2e" stroke-width="1"/>
+      <!-- Clapboard on gable -->
+      <clipPath id="gable-clip">
+        <polygon points="140,230 360,230 250,108"/>
+      </clipPath>
+      <g clip-path="url(#gable-clip)">
+        <line x1="120" y1="222" x2="380" y2="222" stroke="#222428" stroke-width="0.5"/>
+        <line x1="120" y1="215" x2="380" y2="215" stroke="#222428" stroke-width="0.5"/>
+        <line x1="120" y1="208" x2="380" y2="208" stroke="#222428" stroke-width="0.5"/>
+        <line x1="130" y1="200" x2="370" y2="200" stroke="#222428" stroke-width="0.5"/>
+        <line x1="136" y1="193" x2="364" y2="193" stroke="#222428" stroke-width="0.5"/>
+        <line x1="142" y1="185" x2="358" y2="185" stroke="#222428" stroke-width="0.5"/>
+        <line x1="150" y1="178" x2="350" y2="178" stroke="#222428" stroke-width="0.5"/>
+        <line x1="158" y1="170" x2="342" y2="170" stroke="#222428" stroke-width="0.5"/>
+        <line x1="167" y1="163" x2="333" y2="163" stroke="#222428" stroke-width="0.5"/>
+        <line x1="176" y1="155" x2="324" y2="155" stroke="#222428" stroke-width="0.5"/>
+        <line x1="186" y1="147" x2="314" y2="147" stroke="#222428" stroke-width="0.5"/>
+        <line x1="196" y1="140" x2="304" y2="140" stroke="#222428" stroke-width="0.5"/>
+        <line x1="208" y1="132" x2="292" y2="132" stroke="#222428" stroke-width="0.5"/>
+        <line x1="222" y1="124" x2="278" y2="124" stroke="#222428" stroke-width="0.5"/>
+        <line x1="234" y1="116" x2="266" y2="116" stroke="#222428" stroke-width="0.5"/>
+      </g>
 
-      <!-- Porch floor -->
-      <rect x="95" y="240" width="230" height="14" fill="#1c1e20" stroke="#2a2c30" stroke-width="0.5"/>
+      <!-- ── MAIN ROOF ── -->
+      <!-- Left slope -->
+      <polygon points="128,232 140,230 250,108 238,110" fill="#141517" stroke="none"/>
+      <line x1="128" y1="232" x2="250" y2="108" stroke="#1e2025" stroke-width="1.2"/>
+      <!-- Right slope -->
+      <polygon points="372,232 360,230 250,108 262,110" fill="#141517" stroke="none"/>
+      <line x1="372" y1="232" x2="250" y2="108" stroke="#1e2025" stroke-width="1.2"/>
+      <!-- Fascia boards (eave trim) -->
+      <line x1="128" y1="232" x2="372" y2="232" stroke="#23262b" stroke-width="3"/>
+      <!-- Rake boards (roof edge trim) -->
+      <line x1="140" y1="230" x2="252" y2="106" stroke="#23262b" stroke-width="2"/>
+      <line x1="360" y1="230" x2="248" y2="106" stroke="#23262b" stroke-width="2"/>
 
-      <!-- Porch columns -->
-      <rect x="105" y="215" width="6" height="40" fill="#222428"/>
-      <rect x="155" y="215" width="6" height="40" fill="#222428"/>
-      <rect x="258" y="215" width="6" height="40" fill="#222428"/>
-      <rect x="308" y="215" width="6" height="40" fill="#222428"/>
+      <!-- ── GABLE WINDOW (centered, tall-narrow, glowing warm) ── -->
+      <!-- Casing -->
+      <rect x="234" y="155" width="32" height="55" fill="#1a1b1d" stroke="#2e3035" stroke-width="1.5"/>
+      <!-- Glass — warm amber glow -->
+      <rect class="window-glow" x="237" y="158" width="26" height="49" fill="rgba(210,165,80,0.18)"/>
+      <!-- Muntins: 1-over-1 double-hung -->
+      <line x1="237" y1="183" x2="263" y2="183" stroke="#2e3035" stroke-width="0.8"/>
+      <!-- Sill -->
+      <rect x="232" y="208" width="36" height="4" fill="#1e2025"/>
 
-      <!-- Porch railing -->
-      <line x1="110" y1="234" x2="314" y2="234" stroke="#252830" stroke-width="1"/>
+      <!-- Small louvered vent above window -->
+      <rect x="242" y="140" width="16" height="10" fill="#1c1d20" stroke="#2a2c30" stroke-width="0.8"/>
+      <line x1="242" y1="143" x2="258" y2="143" stroke="#2a2c30" stroke-width="0.5"/>
+      <line x1="242" y1="146" x2="258" y2="146" stroke="#2a2c30" stroke-width="0.5"/>
+      <line x1="242" y1="149" x2="258" y2="149" stroke="#2a2c30" stroke-width="0.5"/>
 
-      <!-- Front door -->
-      <rect x="186" y="255" width="48" height="65" fill="#141618" stroke="#2e3035" stroke-width="1"/>
-      <rect x="188" y="257" width="44" height="62" fill="#131518"/>
-      <!-- Door window -->
-      <rect x="196" y="262" width="28" height="18" fill="rgba(180,160,100,0.08)" stroke="#2a2820" stroke-width="0.5"/>
-      <!-- Door knob -->
-      <circle cx="228" cy="292" r="2" fill="#3a3830"/>
+      <!-- ── PORCH ROOF (hip, full-width, low-pitch) ── -->
+      <!-- Attaches to house wall at y=276 (first floor ~mid-point height) -->
+      <!-- Front fascia at y=316. Porch depth ~40px represented in plan -->
+      <!-- Hip form: corners taper in from sides -->
+      <!-- Top edge (attaches to house): x=140 to x=360, y=276 -->
+      <!-- Front fascia: x=140 to x=360, y=316 (very slight pitch — almost flat) -->
+      <!-- Side hips: (140,276)→(140,316) and (360,276)→(360,316) — vertical in elevation -->
+      <!-- In front elevation a hip porch roof shows as essentially a flat band -->
+      <polygon points="128,278 372,278 360,316 140,316" fill="#151618" stroke="#1e2025" stroke-width="1"/>
+      <!-- Shingle texture lines on porch roof -->
+      <line x1="130" y1="284" x2="370" y2="284" stroke="#1a1c1f" stroke-width="0.5"/>
+      <line x1="131" y1="290" x2="369" y2="290" stroke="#1a1c1f" stroke-width="0.5"/>
+      <line x1="132" y1="296" x2="368" y2="296" stroke="#1a1c1f" stroke-width="0.5"/>
+      <line x1="134" y1="302" x2="366" y2="302" stroke="#1a1c1f" stroke-width="0.5"/>
+      <line x1="136" y1="308" x2="364" y2="308" stroke="#1a1c1f" stroke-width="0.5"/>
+      <!-- Fascia board bottom -->
+      <line x1="140" y1="316" x2="360" y2="316" stroke="#252830" stroke-width="2"/>
+      <!-- Side hip ends (small triangles) -->
+      <polygon points="128,278 140,278 140,316" fill="#111315" stroke="#1a1c1f" stroke-width="0.5"/>
+      <polygon points="372,278 360,278 360,316" fill="#111315" stroke="#1a1c1f" stroke-width="0.5"/>
 
-      <!-- WINDOWS — upper floor (warm glow) -->
-      <!-- Left upper -->
-      <rect x="92" y="125" width="52" height="40" fill="rgba(180,140,70,0.06)" stroke="#2e3035" stroke-width="1"/>
-      <rect class="window-glow" x="94" y="127" width="48" height="36" fill="rgba(200,160,80,0.12)"/>
-      <line x1="118" y1="127" x2="118" y2="163" stroke="#2e3035" stroke-width="0.5"/>
-      <line x1="94" y1="145" x2="142" y2="145" stroke="#2e3035" stroke-width="0.5"/>
+      <!-- ── PORCH FLOOR (haint blue-gray) ── -->
+      <rect x="140" y="362" width="220" height="6" fill="#1e2228" stroke="#252a30" stroke-width="0.5"/>
 
-      <!-- Right upper -->
-      <rect x="276" y="125" width="52" height="40" fill="rgba(180,140,70,0.06)" stroke="#2e3035" stroke-width="1"/>
-      <rect class="window-glow-2" x="278" y="127" width="48" height="36" fill="rgba(200,160,80,0.10)"/>
-      <line x1="302" y1="127" x2="302" y2="163" stroke="#2e3035" stroke-width="0.5"/>
-      <line x1="278" y1="145" x2="326" y2="145" stroke="#2e3035" stroke-width="0.5"/>
+      <!-- ── PORCH OPENING (between porch roof and floor) ── -->
+      <!-- 3 square box columns: at x=155, x=250, x=345 -->
+      <!-- Left column -->
+      <rect x="152" y="316" width="8" height="46" fill="#202228"/>
+      <rect x="151" y="314" width="10" height="4" fill="#1d1f22"/>
+      <rect x="151" y="360" width="10" height="4" fill="#1d1f22"/>
+      <!-- Center column -->
+      <rect x="246" y="316" width="8" height="46" fill="#202228"/>
+      <rect x="245" y="314" width="10" height="4" fill="#1d1f22"/>
+      <rect x="245" y="360" width="10" height="4" fill="#1d1f22"/>
+      <!-- Right column -->
+      <rect x="340" y="316" width="8" height="46" fill="#202228"/>
+      <rect x="339" y="314" width="10" height="4" fill="#1d1f22"/>
+      <rect x="339" y="360" width="10" height="4" fill="#1d1f22"/>
 
-      <!-- WINDOWS — main floor -->
-      <!-- Far left -->
-      <rect x="74" y="180" width="60" height="50" fill="rgba(140,160,180,0.04)" stroke="#2e3035" stroke-width="1"/>
-      <rect x="76" y="182" width="56" height="46" fill="rgba(140,160,180,0.04)"/>
-      <line x1="104" y1="182" x2="104" y2="228" stroke="#2e3035" stroke-width="0.5"/>
-      <line x1="76" y1="205" x2="132" y2="205" stroke="#2e3035" stroke-width="0.5"/>
+      <!-- ── PORCH RAILING (white picket) ── -->
+      <!-- Left section: col left (x=160) to door left (x=190) -->
+      <!-- top rail -->
+      <line x1="160" y1="336" x2="192" y2="336" stroke="#272a2e" stroke-width="1.5"/>
+      <!-- bottom rail -->
+      <line x1="160" y1="356" x2="192" y2="356" stroke="#272a2e" stroke-width="1.2"/>
+      <!-- pickets left section -->
+      <line x1="165" y1="336" x2="165" y2="356" stroke="#232528" stroke-width="1"/>
+      <line x1="170" y1="336" x2="170" y2="356" stroke="#232528" stroke-width="1"/>
+      <line x1="175" y1="336" x2="175" y2="356" stroke="#232528" stroke-width="1"/>
+      <line x1="180" y1="336" x2="180" y2="356" stroke="#232528" stroke-width="1"/>
+      <line x1="185" y1="336" x2="185" y2="356" stroke="#232528" stroke-width="1"/>
 
-      <!-- Left -->
-      <rect x="148" y="180" width="58" height="50" fill="rgba(140,160,180,0.04)" stroke="#2e3035" stroke-width="1"/>
-      <line x1="177" y1="182" x2="177" y2="230" stroke="#2e3035" stroke-width="0.5"/>
-      <line x1="150" y1="205" x2="206" y2="205" stroke="#2e3035" stroke-width="0.5"/>
+      <!-- Right section: right of door (x=226) to right col (x=340) -->
+      <!-- top rail -->
+      <line x1="226" y1="336" x2="340" y2="336" stroke="#272a2e" stroke-width="1.5"/>
+      <!-- bottom rail -->
+      <line x1="226" y1="356" x2="340" y2="356" stroke="#272a2e" stroke-width="1.2"/>
+      <!-- pickets right section -->
+      <line x1="231" y1="336" x2="231" y2="356" stroke="#232528" stroke-width="1"/>
+      <line x1="236" y1="336" x2="236" y2="356" stroke="#232528" stroke-width="1"/>
+      <line x1="241" y1="336" x2="241" y2="356" stroke="#232528" stroke-width="1"/>
+      <!-- gap around center col -->
+      <line x1="256" y1="336" x2="256" y2="356" stroke="#232528" stroke-width="1"/>
+      <line x1="261" y1="336" x2="261" y2="356" stroke="#232528" stroke-width="1"/>
+      <line x1="266" y1="336" x2="266" y2="356" stroke="#232528" stroke-width="1"/>
+      <line x1="271" y1="336" x2="271" y2="356" stroke="#232528" stroke-width="1"/>
+      <line x1="276" y1="336" x2="276" y2="356" stroke="#232528" stroke-width="1"/>
+      <line x1="281" y1="336" x2="281" y2="356" stroke="#232528" stroke-width="1"/>
+      <line x1="286" y1="336" x2="286" y2="356" stroke="#232528" stroke-width="1"/>
+      <line x1="291" y1="336" x2="291" y2="356" stroke="#232528" stroke-width="1"/>
+      <line x1="296" y1="336" x2="296" y2="356" stroke="#232528" stroke-width="1"/>
+      <line x1="301" y1="336" x2="301" y2="356" stroke="#232528" stroke-width="1"/>
+      <line x1="306" y1="336" x2="306" y2="356" stroke="#232528" stroke-width="1"/>
+      <line x1="311" y1="336" x2="311" y2="356" stroke="#232528" stroke-width="1"/>
+      <line x1="316" y1="336" x2="316" y2="356" stroke="#232528" stroke-width="1"/>
+      <line x1="321" y1="336" x2="321" y2="356" stroke="#232528" stroke-width="1"/>
+      <line x1="326" y1="336" x2="326" y2="356" stroke="#232528" stroke-width="1"/>
+      <line x1="331" y1="336" x2="331" y2="356" stroke="#232528" stroke-width="1"/>
+      <line x1="336" y1="336" x2="336" y2="356" stroke="#232528" stroke-width="1"/>
 
-      <!-- Right -->
-      <rect x="214" y="180" width="58" height="50" fill="rgba(140,160,180,0.04)" stroke="#2e3035" stroke-width="1"/>
-      <line x1="243" y1="182" x2="243" y2="230" stroke="#2e3035" stroke-width="0.5"/>
-      <line x1="216" y1="205" x2="272" y2="205" stroke="#2e3035" stroke-width="0.5"/>
+      <!-- ── FRONT DOOR (left of center) ── -->
+      <!-- Door frame/casing -->
+      <rect x="188" y="318" width="36" height="44" fill="#141518" stroke="#2a2c30" stroke-width="1.5"/>
+      <!-- Door panel -->
+      <rect x="190" y="320" width="32" height="42" fill="#111315"/>
+      <!-- Half-light window in door top -->
+      <rect x="194" y="323" width="24" height="14" fill="rgba(180,155,90,0.12)" stroke="#252830" stroke-width="0.5"/>
+      <!-- Door knob (right side of door) -->
+      <circle cx="218" cy="343" r="1.8" fill="#302e28"/>
 
-      <!-- Far right -->
-      <rect x="286" y="180" width="60" height="50" fill="rgba(140,160,180,0.04)" stroke="#2e3035" stroke-width="1"/>
-      <line x1="316" y1="182" x2="316" y2="230" stroke="#2e3035" stroke-width="0.5"/>
-      <line x1="288" y1="205" x2="346" y2="205" stroke="#2e3035" stroke-width="0.5"/>
+      <!-- ── WINDOWS: 1st floor, behind porch ── -->
+      <!-- Large window (right of door, center-right of facade) -->
+      <rect x="234" y="235" width="52" height="38" fill="#1a1b1e" stroke="#2a2c30" stroke-width="1.2"/>
+      <rect class="window-glow-2" x="236" y="237" width="48" height="34" fill="rgba(140,160,180,0.06)"/>
+      <!-- muntins 1-over-1 -->
+      <line x1="236" y1="254" x2="284" y2="254" stroke="#2a2c30" stroke-width="0.8"/>
+      <line x1="260" y1="237" x2="260" y2="271" stroke="#2a2c30" stroke-width="0.8"/>
+      <!-- sill -->
+      <rect x="232" y="272" width="56" height="3.5" fill="#1e2025"/>
 
-      <!-- Dormers on roof -->
-      <rect x="128" y="90" width="45" height="35" fill="#151618" stroke="#252830" stroke-width="0.8"/>
-      <polygon points="120,92 150,72 180,92" fill="#111315" stroke="#1e2025" stroke-width="0.8"/>
-      <rect x="134" y="96" width="33" height="24" fill="rgba(180,140,70,0.08)" stroke="#252830" stroke-width="0.5"/>
+      <!-- Smaller window (far right, near right wall) -->
+      <rect x="302" y="238" width="38" height="36" fill="#1a1b1e" stroke="#2a2c30" stroke-width="1.2"/>
+      <rect x="304" y="240" width="34" height="32" fill="rgba(140,160,180,0.04)"/>
+      <!-- muntins -->
+      <line x1="304" y1="256" x2="338" y2="256" stroke="#2a2c30" stroke-width="0.8"/>
+      <line x1="321" y1="240" x2="321" y2="272" stroke="#2a2c30" stroke-width="0.8"/>
+      <!-- sill -->
+      <rect x="299" y="274" width="42" height="3.5" fill="#1e2025"/>
 
-      <rect x="247" y="90" width="45" height="35" fill="#151618" stroke="#252830" stroke-width="0.8"/>
-      <polygon points="240,92 270,72 300,92" fill="#111315" stroke="#1e2025" stroke-width="0.8"/>
-      <rect x="253" y="96" width="33" height="24" fill="rgba(140,160,180,0.05)" stroke="#252830" stroke-width="0.5"/>
+      <!-- ── PORCH STEPS (left-center, 3 risers, lighter wood) ── -->
+      <!-- Steps descend left of door -->
+      <rect x="164" y="362" width="38" height="5" fill="#222528"/>
+      <rect x="160" y="367" width="46" height="5" fill="#1e2225"/>
+      <rect x="156" y="372" width="54" height="6" fill="#1b1e22"/>
+      <!-- step handrail (thin pipe, left side) -->
+      <line x1="162" y1="362" x2="156" y2="376" stroke="#2a2c30" stroke-width="1.2" stroke-linecap="round"/>
 
-      <!-- Foundation -->
-      <rect x="55" y="345" width="310" height="10" fill="#141618" stroke="#252830" stroke-width="0.5"/>
+      <!-- ── GROUND / SNOW LINE ── -->
+      <!-- Sidewalk / concrete path to steps -->
+      <rect x="158" y="390" width="36" height="5" fill="#181a1d"/>
+      <!-- Snow on ground -->
+      <path d="M 110 388 Q 180 383 250 382 Q 320 383 390 388" stroke="rgba(190,200,215,0.22)" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <!-- Snow on main roof ridge/rake -->
+      <path d="M 134 232 Q 192 222 250 218 Q 308 222 366 232" stroke="rgba(190,200,215,0.18)" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <!-- Snow on porch roof -->
+      <path d="M 140 316 Q 250 312 360 316" stroke="rgba(190,200,215,0.14)" stroke-width="1.5" fill="none"/>
 
-      <!-- Stairs to porch -->
-      <rect x="182" y="318" width="56" height="6" fill="#1e2022"/>
-      <rect x="178" y="324" width="64" height="6" fill="#1c1e20"/>
-      <rect x="174" y="330" width="72" height="8" fill="#1a1c1e"/>
+      <!-- ── EVERGREEN SHRUB (right front corner of porch) ── -->
+      <ellipse cx="355" cy="370" rx="14" ry="10" fill="#181c18"/>
+      <ellipse cx="355" cy="364" rx="10" ry="8" fill="#1a201a"/>
+      <ellipse cx="355" cy="359" rx="7" ry="6" fill="#1c221c"/>
 
-      <!-- Trees (bare, winter) -->
-      <!-- Left tree -->
-      <line x1="28" y1="350" x2="28" y2="200" stroke="#1c1e20" stroke-width="3"/>
-      <line x1="28" y1="280" x2="8" y2="240" stroke="#1c1e20" stroke-width="1.5"/>
-      <line x1="28" y1="255" x2="48" y2="218" stroke="#1c1e20" stroke-width="1.5"/>
-      <line x1="28" y1="240" x2="10" y2="210" stroke="#1c1e20" stroke-width="1"/>
-      <line x1="28" y1="220" x2="38" y2="198" stroke="#1c1e20" stroke-width="1"/>
-      <line x1="28" y1="210" x2="16" y2="192" stroke="#1c1e20" stroke-width="0.8"/>
+      <!-- ── ADDRESS NUMBERS "704" on left post ── -->
+      <rect x="140" y="350" width="4" height="20" fill="#1c1e22"/>
+      <text x="136" y="348" font-family="monospace" font-size="7" fill="#3a3830" text-anchor="middle">704</text>
 
-      <!-- Right tree -->
-      <line x1="392" y1="350" x2="392" y2="195" stroke="#1c1e20" stroke-width="2.5"/>
-      <line x1="392" y1="270" x2="408" y2="235" stroke="#1c1e20" stroke-width="1.5"/>
-      <line x1="392" y1="248" x2="374" y2="218" stroke="#1c1e20" stroke-width="1.5"/>
-      <line x1="392" y1="230" x2="405" y2="210" stroke="#1c1e20" stroke-width="1"/>
-      <line x1="392" y1="215" x2="378" y2="198" stroke="#1c1e20" stroke-width="0.8"/>
-
-      <!-- Snow on ground / roof -->
-      <path d="M 40 165 Q 120 158 210 155 Q 300 158 380 165" stroke="rgba(200,210,225,0.25)" stroke-width="2" fill="none"/>
-      <path d="M 60 350 Q 160 344 210 342 Q 260 344 360 350" stroke="rgba(200,210,225,0.2)" stroke-width="3" fill="none"/>
     </svg>
   </div>
 
