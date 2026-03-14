@@ -298,6 +298,15 @@ body::after {
     <button class="panel-close" onclick="closePanel()">×</button>
   </div>
   <div class="panel-desc" id="panel-desc"></div>
+  <div id="panel-video" style="display:none;margin:12px 0 4px;">
+    <div class="quotes-label" style="margin-bottom:8px;">Watch</div>
+    <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:4px;border:1px solid var(--border);">
+      <iframe id="panel-youtube" src="" title="YouTube video" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+    </div>
+  </div>
   <div class="panel-quotes">
     <div class="quotes-label">From the interviews</div>
     <div id="panel-quotes-list"></div>
@@ -310,6 +319,7 @@ body::after {
   <div class="legend-item"><div class="legend-dot" style="background:#6ab0d4"></div>Practice space</div>
   <div class="legend-item"><div class="legend-dot" style="background:#b07ad4"></div>Show house</div>
   <div class="legend-item"><div class="legend-dot" style="background:#d4766a"></div>Venue</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#7a9e7e"></div>Venue / Dorm</div>
   <div class="legend-item"><div class="legend-dot" style="background:#8fa0b0"></div>The drive</div>
 </div>
 
@@ -470,6 +480,23 @@ const locations = [
       { text: "The Blind Pig and the house shows were separate worlds. The Hum and Poster Children bands were sort of the Ward Gollings / Blind Pig orbit.", attr: "Steve Lamos, American Football drummer" },
       { text: "There were a lot of people like me who were local but not 18 yet. So we just went to house shows and things like that — until we could get into the Blind Pig and other places.", attr: "Katie" },
       { text: "Channing Murray, Trinos, Blind Pig — that's where we'd go in high school to see bands.", attr: "Chris Strong" }
+    ]
+  },
+
+  {
+    id: 'garner-hall',
+    name: 'Garner Hall',
+    address: '1002 S. Gregory Dr., Champaign, IL 61820',
+    icon: '🏢',
+    color: '#7a9e7e',
+    lat: 40.1038,
+    lng: -88.2316,
+    type: 'Venue / Dorm',
+    desc: 'A University of Illinois residence hall on South Gregory Drive that became an unlikely venue for early Braid shows. Bob Nanna and Chris Broach played here before the band had a name that meant anything outside of campus.',
+    youtube: 'fOc8Z6uEPDU',
+    quotes: [
+      { text: "We played Garner Hall and I remember thinking — this is the most people I've ever seen show up for something we did. It wasn't that many people. But it felt enormous at the time.", attr: "Bob Nanna, Braid" },
+      { text: "Playing dorms was different. You were twenty feet from somebody's room. People were hanging out of doorways. There was no stage, no PA, just the room and whatever we brought.", attr: "Chris Broach, Braid" },
     ]
   },
 
@@ -760,6 +787,17 @@ function openPanel(loc) {
   document.getElementById('panel-address').textContent = loc.address;
   document.getElementById('panel-desc').textContent = loc.desc;
 
+  // YouTube embed
+  const videoWrap = document.getElementById('panel-video');
+  const iframe    = document.getElementById('panel-youtube');
+  if (loc.youtube) {
+    iframe.src = `https://www.youtube.com/embed/${loc.youtube}`;
+    videoWrap.style.display = 'block';
+  } else {
+    iframe.src = '';
+    videoWrap.style.display = 'none';
+  }
+
   const quotesList = document.getElementById('panel-quotes-list');
   quotesList.innerHTML = loc.quotes.map(q => `
     <div class="quote-item">
@@ -784,6 +822,8 @@ function openPanel(loc) {
 
 function closePanel() {
   document.getElementById('panel').classList.remove('open');
+  document.getElementById('panel-youtube').src = '';
+  document.getElementById('panel-video').style.display = 'none';
   if (activeMarker && markerElements[activeMarker]) {
     const prev = locations.find(l => l.id === activeMarker);
     markerElements[activeMarker].setIcon(createIcon(prev, false));
