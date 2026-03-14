@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Basement — 704 West High Street</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:      #080a0c;
+  --paper:   #d8d2c4;
+  --warm:    #c4a882;
+  --dim:     #4a4840;
+  --cold:    #6a8298;
+  --gold:    #a08860;
+  --amber:   #a07820;
+}
+
+html, body {
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--paper);
+  font-family: 'IBM Plex Mono', monospace;
+  overflow-x: hidden;
+}
+
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 1000;
+}
+
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 50;
+  background: linear-gradient(180deg, rgba(8,10,12,0.95) 0%, transparent 100%);
+}
+.nav-back {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.nav-back:hover { opacity: 1; }
+.nav-room {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cold);
+  opacity: 0.5;
+}
+
+.room-wrap {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 80px 24px 0;
+}
+
+.room-svg { width: 100%; height: auto; display: block; }
+
+.room-content {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+.room-label {
+  text-align: center;
+  margin-bottom: 64px;
+}
+.room-label h1 {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: clamp(28px, 5vw, 48px);
+  color: var(--warm);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+}
+.room-label .subtitle {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cold);
+  opacity: 0.6;
+}
+
+.story { margin-bottom: 64px; }
+
+.story-number {
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--amber);
+  opacity: 0.7;
+  margin-bottom: 12px;
+}
+
+.story blockquote {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: clamp(18px, 3vw, 26px);
+  line-height: 1.55;
+  color: var(--paper);
+  border-left: 2px solid var(--amber);
+  padding-left: 24px;
+  margin-bottom: 16px;
+  opacity: 0.92;
+}
+
+.story .attribution {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding-left: 26px;
+  opacity: 0.7;
+}
+
+.divider {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(180deg, transparent, var(--amber), transparent);
+  margin: 0 auto 64px;
+  opacity: 0.3;
+}
+
+.room-nav {
+  border-top: 1px solid rgba(160,136,96,0.12);
+  padding-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.room-nav a {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+.room-nav a:hover { opacity: 1; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.room-label         { animation: fadeUp 1.2s ease 0.2s both; }
+.story:nth-child(1) { animation: fadeUp 1.2s ease 0.5s both; }
+.story:nth-child(2) { animation: fadeUp 1.2s ease 0.8s both; }
+.story:nth-child(3) { animation: fadeUp 1.2s ease 1.1s both; }
+.story:nth-child(4) { animation: fadeUp 1.2s ease 1.4s both; }
+
+@keyframes flickerBulb {
+  0%,100% { opacity: 1; }
+  92%     { opacity: 1; }
+  93%     { opacity: 0.6; }
+  94%     { opacity: 1; }
+  97%     { opacity: 0.8; }
+  98%     { opacity: 1; }
+}
+.bulb-glow { animation: flickerBulb 12s ease-in-out infinite; }
+
+@keyframes ampHum {
+  0%,100% { opacity: 0.18; }
+  50%     { opacity: 0.28; }
+}
+.amp-glow { animation: ampHum 3.5s ease-in-out infinite; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-back" href="../index.html">← 704 West High St</a>
+  <span class="nav-room">The Basement</span>
+</nav>
+
+<div class="room-wrap">
+  <svg class="room-svg" viewBox="0 0 900 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="bulbLight" cx="50%" cy="0%" r="80%">
+        <stop offset="0%"   stop-color="rgba(200,160,80,0.20)"/>
+        <stop offset="60%"  stop-color="rgba(180,130,60,0.05)"/>
+        <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+      </radialGradient>
+      <radialGradient id="ampGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%"   stop-color="rgba(255,60,20,0.5)"/>
+        <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+      </radialGradient>
+      <radialGradient id="winLight" cx="50%" cy="50%" r="50%">
+        <stop offset="0%"   stop-color="rgba(140,170,200,0.16)"/>
+        <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+      </radialGradient>
+    </defs>
+
+    <!-- ── CEILING ── -->
+    <rect x="0" y="0" width="900" height="58" fill="#0c1014"/>
+    <!-- Exposed joists -->
+    <rect x="0"   y="4" width="900" height="9" fill="#111418" stroke="#181c22" stroke-width="0.5"/>
+    <rect x="80"  y="0" width="16" height="58" fill="#0f1216" stroke="#181c22" stroke-width="0.4"/>
+    <rect x="200" y="0" width="16" height="58" fill="#0f1216" stroke="#181c22" stroke-width="0.4"/>
+    <rect x="320" y="0" width="16" height="58" fill="#0f1216" stroke="#181c22" stroke-width="0.4"/>
+    <rect x="440" y="0" width="16" height="58" fill="#0f1216" stroke="#181c22" stroke-width="0.4"/>
+    <rect x="560" y="0" width="16" height="58" fill="#0f1216" stroke="#181c22" stroke-width="0.4"/>
+    <rect x="680" y="0" width="16" height="58" fill="#0f1216" stroke="#181c22" stroke-width="0.4"/>
+    <rect x="800" y="0" width="16" height="58" fill="#0f1216" stroke="#181c22" stroke-width="0.4"/>
+    <!-- Pipe along ceiling -->
+    <rect x="0" y="34" width="900" height="6" fill="#161a22" stroke="#1c2030" stroke-width="0.5"/>
+    <rect x="0" y="44" width="900" height="4" fill="#12141a" stroke="#1c2030" stroke-width="0.4"/>
+
+    <!-- ── HANGING BULB ── -->
+    <line x1="450" y1="0" x2="450" y2="84" stroke="#18191e" stroke-width="1.5"/>
+    <rect x="443" y="78" width="14" height="8" fill="#1a1c20" rx="2"/>
+    <ellipse cx="450" cy="96" rx="8" ry="11" fill="#282616" stroke="#38341e" stroke-width="0.8"/>
+    <ellipse class="bulb-glow" cx="450" cy="96" rx="6" ry="8" fill="rgba(230,195,100,0.65)"/>
+    <polygon class="bulb-glow" points="450,108 320,420 580,420" fill="url(#bulbLight)" opacity="0.9"/>
+
+    <!-- ── BACK WALL — CINDERBLOCK ── -->
+    <rect x="0" y="56" width="900" height="362" fill="#0e1014"/>
+    <g stroke="#161820" stroke-width="0.6" opacity="0.85">
+      <line x1="0" y1="88"  x2="900" y2="88"/>
+      <line x1="0" y1="120" x2="900" y2="120"/>
+      <line x1="0" y1="152" x2="900" y2="152"/>
+      <line x1="0" y1="184" x2="900" y2="184"/>
+      <line x1="0" y1="216" x2="900" y2="216"/>
+      <line x1="0" y1="248" x2="900" y2="248"/>
+      <line x1="0" y1="280" x2="900" y2="280"/>
+      <line x1="0" y1="312" x2="900" y2="312"/>
+      <line x1="0" y1="344" x2="900" y2="344"/>
+      <!-- Alternating vertical joints -->
+      <line x1="100" y1="56" x2="100" y2="88"/>  <line x1="200" y1="56" x2="200" y2="88"/>
+      <line x1="300" y1="56" x2="300" y2="88"/>  <line x1="400" y1="56" x2="400" y2="88"/>
+      <line x1="500" y1="56" x2="500" y2="88"/>  <line x1="600" y1="56" x2="600" y2="88"/>
+      <line x1="700" y1="56" x2="700" y2="88"/>  <line x1="800" y1="56" x2="800" y2="88"/>
+      <line x1="50"  y1="88" x2="50"  y2="120"/> <line x1="150" y1="88" x2="150" y2="120"/>
+      <line x1="250" y1="88" x2="250" y2="120"/> <line x1="350" y1="88" x2="350" y2="120"/>
+      <line x1="450" y1="88" x2="450" y2="120"/> <line x1="550" y1="88" x2="550" y2="120"/>
+      <line x1="650" y1="88" x2="650" y2="120"/> <line x1="750" y1="88" x2="750" y2="120"/>
+      <line x1="850" y1="88" x2="850" y2="120"/>
+      <line x1="100" y1="120" x2="100" y2="152"/> <line x1="200" y1="120" x2="200" y2="152"/>
+      <line x1="300" y1="120" x2="300" y2="152"/> <line x1="400" y1="120" x2="400" y2="152"/>
+      <line x1="500" y1="120" x2="500" y2="152"/> <line x1="600" y1="120" x2="600" y2="152"/>
+      <line x1="700" y1="120" x2="700" y2="152"/> <line x1="800" y1="120" x2="800" y2="152"/>
+      <line x1="50"  y1="152" x2="50"  y2="184"/> <line x1="150" y1="152" x2="150" y2="184"/>
+      <line x1="250" y1="152" x2="250" y2="184"/> <line x1="350" y1="152" x2="350" y2="184"/>
+      <line x1="450" y1="152" x2="450" y2="184"/> <line x1="550" y1="152" x2="550" y2="184"/>
+      <line x1="650" y1="152" x2="650" y2="184"/> <line x1="750" y1="152" x2="750" y2="184"/>
+      <line x1="850" y1="152" x2="850" y2="184"/>
+      <line x1="100" y1="184" x2="100" y2="216"/> <line x1="200" y1="184" x2="200" y2="216"/>
+      <line x1="300" y1="184" x2="300" y2="216"/> <line x1="400" y1="184" x2="400" y2="216"/>
+      <line x1="500" y1="184" x2="500" y2="216"/> <line x1="600" y1="184" x2="600" y2="216"/>
+      <line x1="700" y1="184" x2="700" y2="216"/> <line x1="800" y1="184" x2="800" y2="216"/>
+      <line x1="50"  y1="216" x2="50"  y2="248"/> <line x1="150" y1="216" x2="150" y2="248"/>
+      <line x1="250" y1="216" x2="250" y2="248"/> <line x1="350" y1="216" x2="350" y2="248"/>
+      <line x1="450" y1="216" x2="450" y2="248"/> <line x1="550" y1="216" x2="550" y2="248"/>
+      <line x1="650" y1="216" x2="650" y2="248"/> <line x1="750" y1="216" x2="750" y2="248"/>
+    </g>
+
+    <!-- ── GROUND-LEVEL WINDOWS ── -->
+    <rect x="58" y="68" width="112" height="54" fill="#0c0e12" stroke="#181e28" stroke-width="1.2"/>
+    <rect x="58" y="68" width="112" height="54" fill="url(#winLight)"/>
+    <rect x="58" y="100" width="112" height="22" fill="#0a0c0e" opacity="0.65"/>
+    <line x1="114" y1="68" x2="114" y2="122" stroke="#181e28" stroke-width="1.5"/>
+    <line x1="58"  y1="96" x2="170" y2="96"  stroke="#181e28" stroke-width="1.5"/>
+    <rect x="53"  y="64" width="6"   height="62" fill="#121418"/>
+    <rect x="170" y="64" width="6"   height="62" fill="#121418"/>
+    <rect x="53"  y="64" width="122" height="6"  fill="#121418"/>
+    <text x="60" y="62" font-family="Caveat, cursive" font-size="11" fill="rgba(120,150,180,0.38)">daylight</text>
+
+    <rect x="730" y="68" width="112" height="54" fill="#0c0e12" stroke="#181e28" stroke-width="1.2"/>
+    <rect x="730" y="68" width="112" height="54" fill="url(#winLight)"/>
+    <rect x="730" y="100" width="112" height="22" fill="#0a0c0e" opacity="0.65"/>
+    <line x1="786" y1="68" x2="786" y2="122" stroke="#181e28" stroke-width="1.5"/>
+    <line x1="730" y1="96" x2="842" y2="96"  stroke="#181e28" stroke-width="1.5"/>
+    <rect x="724" y="64" width="6"   height="62" fill="#121418"/>
+    <rect x="842" y="64" width="6"   height="62" fill="#121418"/>
+    <rect x="724" y="64" width="122" height="6"  fill="#121418"/>
+
+    <!-- ── STAIRCASE (upper right, descending) ── -->
+    <rect x="706" y="342" width="178" height="19" fill="#12151a" stroke="#1c2028" stroke-width="0.8"/>
+    <rect x="726" y="323" width="158" height="19" fill="#10131a" stroke="#1c2028" stroke-width="0.8"/>
+    <rect x="746" y="304" width="138" height="19" fill="#12151a" stroke="#1c2028" stroke-width="0.8"/>
+    <rect x="766" y="285" width="118" height="19" fill="#10131a" stroke="#1c2028" stroke-width="0.8"/>
+    <rect x="786" y="266" width="98"  height="19" fill="#12151a" stroke="#1c2028" stroke-width="0.8"/>
+    <rect x="806" y="247" width="78"  height="19" fill="#10131a" stroke="#1c2028" stroke-width="0.8"/>
+    <rect x="826" y="228" width="58"  height="19" fill="#12151a" stroke="#1c2028" stroke-width="0.8"/>
+    <line x1="706" y1="361" x2="884" y2="228" stroke="#1a1e26" stroke-width="3" stroke-linecap="round"/>
+    <line x1="710" y1="334" x2="884" y2="214" stroke="#16181e" stroke-width="3.5" stroke-linecap="round"/>
+    <rect x="826" y="0" width="74" height="58" fill="#090b0e"/>
+    <line x1="716" y1="355" x2="710" y2="334" stroke="#181c24" stroke-width="1.5"/>
+    <line x1="736" y1="336" x2="730" y2="315" stroke="#181c24" stroke-width="1.5"/>
+    <line x1="756" y1="317" x2="750" y2="296" stroke="#181c24" stroke-width="1.5"/>
+    <line x1="776" y1="298" x2="770" y2="277" stroke="#181c24" stroke-width="1.5"/>
+    <line x1="796" y1="279" x2="790" y2="258" stroke="#181c24" stroke-width="1.5"/>
+    <text x="628" y="290" font-family="Caveat, cursive" font-size="12" fill="rgba(160,136,96,0.35)" transform="rotate(2,628,290)">stairs up →</text>
+
+    <!-- ── FLOOR — CRACKED CONCRETE ── -->
+    <rect x="0" y="418" width="900" height="62" fill="#0b0d0f"/>
+    <line x1="0"   y1="430" x2="900" y2="430" stroke="#101216" stroke-width="0.8"/>
+    <line x1="0"   y1="444" x2="900" y2="444" stroke="#101216" stroke-width="0.8"/>
+    <line x1="0"   y1="458" x2="900" y2="458" stroke="#101216" stroke-width="0.8"/>
+    <path d="M115,418 Q138,428 128,442 Q122,452 142,460" stroke="#0d0f12" stroke-width="0.9" fill="none"/>
+    <path d="M375,420 Q390,430 383,442" stroke="#0d0f12" stroke-width="0.8" fill="none"/>
+    <path d="M615,423 Q630,435 622,448" stroke="#0d0f12" stroke-width="0.8" fill="none"/>
+    <rect x="416" y="434" width="28" height="20" fill="#090b0d" stroke="#131518" stroke-width="0.8" rx="2"/>
+    <line x1="421" y1="438" x2="438" y2="438" stroke="#101214" stroke-width="0.7"/>
+    <line x1="421" y1="443" x2="438" y2="443" stroke="#101214" stroke-width="0.7"/>
+    <line x1="421" y1="448" x2="438" y2="448" stroke="#101214" stroke-width="0.7"/>
+    <text x="452" y="451" font-family="Caveat, cursive" font-size="11" fill="rgba(160,136,96,0.28)">← drain</text>
+
+    <!-- ── AMPLIFIER STACK (left wall) ── -->
+    <rect x="18" y="308" width="82" height="68" fill="#0e1216" stroke="#181c22" stroke-width="0.8"/>
+    <rect x="18" y="308" width="82" height="33" fill="#0c1014" stroke="#181c22" stroke-width="0.6"/>
+    <rect x="23" y="313" width="72" height="23" fill="#0a0c10" stroke="#14181e" stroke-width="0.4"/>
+    <circle cx="45"  cy="324" r="9" fill="#090b0e" stroke="#131618" stroke-width="0.6"/>
+    <circle cx="77"  cy="324" r="9" fill="#090b0e" stroke="#131618" stroke-width="0.6"/>
+    <rect x="23" y="345" width="72" height="26" fill="#0a0c10" stroke="#14181e" stroke-width="0.4"/>
+    <circle cx="38"  cy="358" r="2.5" fill="#181a1e"/>
+    <circle cx="50"  cy="358" r="2.5" fill="#181a1e"/>
+    <circle cx="62"  cy="358" r="2.5" fill="#181a1e"/>
+    <circle cx="74"  cy="358" r="2.5" fill="#181a1e"/>
+    <circle cx="86"  cy="352" r="2"   fill="rgba(255,50,20,0.7)"/>
+    <circle class="amp-glow" cx="86" cy="352" r="7" fill="url(#ampGlow)"/>
+    <rect x="10" y="300" width="82" height="72" fill="#0b0e12" stroke="#14181c" stroke-width="0.6"/>
+    <text x="104" y="352" font-family="Caveat, cursive" font-size="12" fill="rgba(160,136,96,0.36)" transform="rotate(-2,104,352)">amp stack</text>
+
+    <!-- ── PA SPEAKER (center-left) ── -->
+    <rect x="185" y="298" width="68" height="120" fill="#0e1216" stroke="#181c22" stroke-width="0.8" rx="2"/>
+    <rect x="190" y="304" width="58" height="78" fill="#0a0c10" stroke="#131618" stroke-width="0.4" rx="1"/>
+    <circle cx="219" cy="343" r="25" fill="#090b0e" stroke="#131618" stroke-width="0.7"/>
+    <circle cx="219" cy="343" r="15" fill="#07090b" stroke="#101316" stroke-width="0.5"/>
+    <circle cx="219" cy="343" r="6"  fill="#0b0d10" stroke="#0f1214" stroke-width="0.4"/>
+    <circle cx="219" cy="390" r="8"  fill="#090b0e" stroke="#131618" stroke-width="0.5"/>
+    <line x1="219" y1="418" x2="209" y2="418" stroke="#131618" stroke-width="2"/>
+
+    <!-- ── CABLES on floor ── -->
+    <path d="M100,418 Q160,414 210,418 Q260,422 300,418" stroke="#121416" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M108,418 Q170,422 215,420 Q268,416 305,418" stroke="#101318" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M253,418 Q280,416 310,418" stroke="#121416" stroke-width="2" fill="none"/>
+
+    <!-- ── FURNACE DUCT (far left, going up) ── -->
+    <rect x="0" y="0" width="20" height="300" fill="#0f1216" stroke="#151820" stroke-width="0.6"/>
+    <rect x="0" y="288" width="20" height="132" fill="#0d1014" stroke="#151820" stroke-width="0.6"/>
+    <text x="24" y="160" font-family="Caveat, cursive" font-size="11" fill="rgba(160,136,96,0.26)" transform="rotate(90,24,160)">furnace duct</text>
+
+    <!-- ── HANDWRITTEN ANNOTATIONS ── -->
+    <text x="142" y="296" font-family="Caveat, cursive" font-size="12" fill="rgba(160,136,96,0.36)" transform="rotate(-2,142,296)">practice space</text>
+    <text x="340" y="160" font-family="Caveat, cursive" font-size="12" fill="rgba(160,136,96,0.30)" transform="rotate(1,340,160)">unfinished</text>
+    <text x="490" y="240" font-family="Caveat, cursive" font-size="13" fill="rgba(160,136,96,0.22)" transform="rotate(-1,490,240)">parents' house</text>
+
+  </svg>
+</div>
+
+<div class="room-content">
+
+  <div class="room-label">
+    <h1>The Basement</h1>
+    <div class="subtitle">704 West High Street &nbsp;·&nbsp; Urbana, Illinois</div>
+  </div>
+
+  <div class="story">
+    <div class="story-number">I</div>
+    <blockquote>
+      "All of the music was born in basements because we didn't — at that time we all had basements, or somebody's parents had a basement where whether it was unfinished or finished that you could play in and their parents were like cool enough to let us make a fuck ton of noise."
+    </blockquote>
+    <div class="attribution">— Bob Nanna, Braid</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="story">
+    <div class="story-number">II</div>
+    <blockquote>
+      "Usually nobody lives there. That's the usual thing. The bedrooms are upstairs somewhere. And a lot of times they're unfinished — so you're working with a blank canvas in terms of building a studio or building anything. And also there's the noise factor. You will have less noise spilling out to the neighbors because you've got solid earth on four sides."
+    </blockquote>
+    <div class="attribution">— Don Zientara, Inner Ear Studios, Arlington, Virginia</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="story">
+    <div class="story-number">III</div>
+    <blockquote>
+      "We took some cues from labels like Dischord — the obviously ultimate example — where they only put out bands from their area, with the idea of documenting the scene. We put our own spin on that."
+    </blockquote>
+    <div class="attribution">— Matt Lunsford, co-founder, Polyvinyl Record Co.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="story">
+    <div class="story-number">IV</div>
+    <blockquote>
+      "Basements represent possibility — because they represent having some additional space that is open-ended to do something interesting. I think that is very much like the difference between the Midwest and California, where there's just a little bit more room and a little bit more possibility. A basement represents that openness and that space to run your record label, or have band practice, or throw a show."
+    </blockquote>
+    <div class="attribution">— Matt Lunsford, Polyvinyl Record Co.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="story">
+    <div class="story-number">V</div>
+    <blockquote>
+      "In Champaign it was mostly like living room shows. Although there was like a couple of church basements that we played shows at — maybe that counts. No basement, sorry. I broke the theory."
+    </blockquote>
+    <div class="attribution">— Steve Holmes, American Football</div>
+  </div>
+
+  <div class="room-nav">
+    <a href="kitchen.html">← The Kitchen</a>
+    <a href="living-room.html">The Living Room →</a>
+  </div>
+
+</div>
+
+</body>
+</html>
